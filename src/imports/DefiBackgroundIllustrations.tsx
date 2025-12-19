@@ -1,6 +1,7 @@
 import svgPaths from "./svg-8iaedxj4ke";
 import clsx from "clsx";
 import { motion } from "motion/react";
+import React from "react";
 
 type Icon15Props = {
   additionalClassNames?: string;

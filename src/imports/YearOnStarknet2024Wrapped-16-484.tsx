@@ -1,7 +1,8 @@
 import svgPaths from "./svg-bk0buc65c9";
 import clsx from "clsx";
-import imgImageMentor from "figma:asset/3e42fce03399e38ff4bc7b7ac1aac5523d7f5b21.png";
-import imgImageEndurFi from "figma:asset/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png";
+import React from "react";
+const imgImageMentor = "/3e42fce03399e38ff4bc7b7ac1aac5523d7f5b21.png";
+const imgImageEndurFi = "/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png";
 type DefiBackgroundIllustrations2HelperProps = {
   additionalClassNames?: string;
 };

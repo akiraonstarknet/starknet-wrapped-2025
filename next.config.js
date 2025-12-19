@@ -5,6 +5,6 @@ const nextConfig = {
     remotePatterns: [],
   },
   transpilePackages: ['motion'],
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

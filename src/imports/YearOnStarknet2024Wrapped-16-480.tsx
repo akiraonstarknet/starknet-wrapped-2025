@@ -1,6 +1,7 @@
 import svgPaths from "./svg-dols39qjkr";
 import clsx from "clsx";
-import imgImageEndurFi from "figma:asset/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png";
+import React from "react";
+const imgImageEndurFi = "/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png";
 type Icon15Props = {
   additionalClassNames?: string;
 };

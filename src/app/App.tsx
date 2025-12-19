@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import DefiBackgroundIllustrations from '../imports/DefiBackgroundIllustrations';
 import TwitterLogo from '../imports/TwitterLogo';
 import { fetchAllWrappedData } from '../lib/api';
@@ -12,8 +12,6 @@ import {
   Rocket,
   Droplet,
   Bitcoin,
-  Gamepad2,
-  Globe2,
   Sparkles,
   Lock,
   ArrowLeft,
@@ -22,27 +20,19 @@ import {
   Heart,
   Trophy,
   Zap,
-  TrendingUp,
-  Users,
   Target,
-  Star,
-  Award,
   Shield,
   Check,
   Loader2,
-  Copy,
   X,
   ChevronLeft,
   ChevronRight,
   Waves,
   Coins,
   Activity,
-  BarChart3,
   Calendar,
-  Flame,
   Crown,
   Gem,
-  Download,
   Plus,
   Trash2,
 } from 'lucide-react';
@@ -50,8 +40,6 @@ import { toast, Toaster } from 'sonner';
 
 // Asset paths
 const image_eb8b1b0f9d529bddb7455a7756fbecb420fb6b08 = '/eb8b1b0f9d529bddb7455a7756fbecb420fb6b08.png';
-const image_3e42fce03399e38ff4bc7b7ac1aac5523d7f5b21 = '/3e42fce03399e38ff4bc7b7ac1aac5523d7f5b21.png';
-const mentorImage = '/f4fbdc80ee72c690b4f2b7319e431b41c607dbef.png';
 const endurLogo = '/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
 const protocol1 = '/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
 const protocol2 = '/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
@@ -301,7 +289,7 @@ function LoadingScreen({ isTurquoiseMode }: { isTurquoiseMode: boolean }) {
 function LandingScreen({ 
   onStart, 
   isTurquoiseMode, 
-  toggleTurquoiseMode,
+  toggleTurquoiseMode: _toggleTurquoiseMode,
   session 
 }: { 
   onStart: (walletAddresses: string[]) => void; 
@@ -400,23 +388,6 @@ function LandingScreen({
     localStorage.removeItem('walletAddresses');
     
     // Proceed to wrapped experience with wallet addresses
-    onStart(walletAddresses);
-  };
-
-  const handleSubmit = () => {
-    if (walletAddresses.length === 0) {
-      toast.error('Add at least one wallet!');
-      return;
-    }
-
-    if (!isTwitterConnected) {
-      toast.error('Connect with Twitter first!');
-      return;
-    }
-    
-    // Clear localStorage before proceeding
-    localStorage.removeItem('walletAddresses');
-    
     onStart(walletAddresses);
   };
 
@@ -621,7 +592,7 @@ function LandingScreen({
                 whileTap={{ scale: 0.98 }}
                 className="w-full px-12 py-6 bg-[#00DE71] border-4 border-black rounded-2xl text-black font-black text-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] transition-all cursor-pointer"
               >
-                LET'S FUCKING GO! 🚀
+                LET&apos;S FUCKING GO! 🚀
               </motion.button>
             </motion.div>
           )}
@@ -997,13 +968,6 @@ function ActViewer({
     }
   };
 
-  const handleShare = () => {
-    const text = `Check out my #StarknetWrapped2025! 🔥\n\nAct ${act.id}: ${act.title}\n${currentCard.title}: ${currentCard.value}\n\nPowered by @Endur_fi 🚀`;
-    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-    window.open(tweetUrl, '_blank');
-    toast.success('Opening Twitter! 🐦');
-  };
-
   return (
     <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: getBgColor('#014a42') }}>
       <AnimatedDefiBackground />
@@ -1086,9 +1050,9 @@ function ActViewer({
 												YOUR 2025 WRAPPED
 											</h3>
 										</div>
-										<div className="inline-block bg-white/30 border-4 border-black px-6 py-2 rounded-xl">
-											<p className="text-lg font-black text-black">COLLECTOR'S EDITION NFT</p>
-										</div>
+									<div className="inline-block bg-white/30 border-4 border-black px-6 py-2 rounded-xl">
+										<p className="text-lg font-black text-black">COLLECTOR&apos;S EDITION NFT</p>
+									</div>
 									</motion.div>
 
 									{/* NFT Badge - Larger and More Prominent */}
@@ -1319,9 +1283,9 @@ function ActViewer({
 												Liquid Staking 2025
 											</h3>
 										</div>
-										<div className="inline-block bg-white/30 border-4 border-black px-6 py-2 rounded-xl">
-											<p className="text-lg font-black text-black">COLLECTOR'S EDITION NFT</p>
-										</div>
+									<div className="inline-block bg-white/30 border-4 border-black px-6 py-2 rounded-xl">
+										<p className="text-lg font-black text-black">COLLECTOR&apos;S EDITION NFT</p>
+									</div>
 									</motion.div>
 
 									{/* NFT Badge - Larger and More Prominent */}
@@ -1820,7 +1784,7 @@ function ActViewer({
                               className="absolute bg-white border-4 border-black rounded-full p-2"
                               style={{ 
                                 left: `${index * 20}px`,
-                                zIndex: currentCard.images.length - index,
+                                zIndex: (currentCard.images?.length ?? 0) - index,
                               }}
                             >
                               <img src={img} alt={`Protocol ${index + 1}`} className="w-8 h-8 object-contain" />
@@ -1946,8 +1910,8 @@ export default function App({ session }: { session: any }) {
   const [selectedAct, setSelectedAct] = useState<Act | null>(null);
   const [isTurquoiseMode, setIsTurquoiseMode] = useState(false);
   const [userData, setUserData] = useState<UserWrappedData>(mockUserData);
-  const [isLoading, setIsLoading] = useState(false);
-  const [walletAddresses, setWalletAddresses] = useState<string[]>([]);
+  const [, setIsLoading] = useState(false);
+  const [, setWalletAddresses] = useState<string[]>([]);
 
   const toggleTurquoiseMode = () => {
     setIsTurquoiseMode(prev => !prev);
@@ -1959,7 +1923,7 @@ export default function App({ session }: { session: any }) {
     setIsLoading(true);
     setScreen('loading');
 
-		let truncatedAddresses = addresses.map((address) => address.slice(0, 6) + '...' + address.slice(-4));
+		const truncatedAddresses = addresses.map((address) => `${address.slice(0, 6)  }...${  address.slice(-4)}`);
 
     try {
       // Fetch both queries in parallel
