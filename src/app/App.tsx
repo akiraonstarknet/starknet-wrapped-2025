@@ -694,7 +694,7 @@ function Dashboard({
             style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
           >
             <Heart className="w-5 h-5" />
-            for the love of Mentor
+            gTurquoise
           </motion.button>
         </motion.div>
 
@@ -1063,212 +1063,202 @@ function ActViewer({
             animate={{ x: 0, opacity: 1, rotate: 0 }}
             exit={{ x: direction > 0 ? -300 : 300, opacity: 0, rotate: -10 }}
             transition={{ type: 'spring', bounce: 0.3 }}
-            className="w-full max-w-2xl"
+            className={`w-full ${currentCard.id === '1-7' || currentCard.id === '2-6' ? 'max-w-5xl' : 'max-w-2xl'}`}
+						// className="w-2xl"
           >
             {/* Check if it's the NFT Summary Card (7th card) */}
             {currentCard.id === '1-7' ? (
               /* NFT Summary Card */
               <div
-                className="border-8 border-black rounded-3xl p-8 md:p-10 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
+                className="flex flex-row flex-1 border-8 border-black rounded-3xl p-8 md:p-10 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
                 style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : currentCard.color }}
               >
-                {/* Decorative corner badges */}
-                <div className="absolute top-4 left-4 bg-[#FFD93D] border-4 border-black rounded-full w-12 h-12 flex items-center justify-center z-10 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                  <Star className="w-7 h-7 text-black" strokeWidth={2.5} fill="black" />
-                </div>
-                <div className="absolute top-4 right-4 bg-[#6BCF7F] border-4 border-black rounded-full w-12 h-12 flex items-center justify-center z-10 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                  <Crown className="w-7 h-7 text-black" strokeWidth={2.5} />
-                </div>
+								<div className="flex flex-col items-center justify-center flex-1">
+									{/* Title Banner */}
+									<motion.div
+										initial={{ opacity: 0, y: -20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.2 }}
+										className="text-center mb-8"
+									>
+										<div className="inline-block bg-black border-4 border-black px-8 py-3 rounded-2xl mb-4">
+											<h3 className="text-2xl md:text-3xl font-black text-white">
+												YOUR 2025 WRAPPED
+											</h3>
+										</div>
+										<div className="inline-block bg-white/30 border-4 border-black px-6 py-2 rounded-xl">
+											<p className="text-lg font-black text-black">COLLECTOR'S EDITION NFT</p>
+										</div>
+									</motion.div>
 
-                {/* Title Banner */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-center mb-8"
-                >
-                  <div className="inline-block bg-black border-4 border-black px-8 py-3 rounded-2xl mb-4">
-                    <h3 className="text-2xl md:text-3xl font-black text-white">
-                      YOUR 2025 WRAPPED
-                    </h3>
-                  </div>
-                  <div className="inline-block bg-white/30 border-4 border-black px-6 py-2 rounded-xl">
-                    <p className="text-lg font-black text-black">COLLECTOR'S EDITION NFT</p>
-                  </div>
-                </motion.div>
+									{/* NFT Badge - Larger and More Prominent */}
+									<motion.div
+										initial={{ scale: 0, rotate: -180 }}
+										animate={{ scale: 1, rotate: 0 }}
+										transition={{ delay: 0.3, type: 'spring', bounce: 0.5 }}
+										className="flex items-center justify-center mb-8"
+									>
+										<div className="relative">
+											{/* Glow effect background */}
+											<div className="absolute inset-0 bg-[#FFD93D] blur-xl opacity-50 rounded-3xl"></div>
+											{/* Main badge */}
+											<div className="relative bg-gradient-to-br from-[#FFD93D] to-[#FF6B9D] border-6 border-black rounded-3xl p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+												<Gem className="w-20 h-20 md:w-24 md:h-24 text-black drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]" strokeWidth={2.5} />
+											</div>
+										</div>
+									</motion.div>
 
-                {/* NFT Badge - Larger and More Prominent */}
-                <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.3, type: 'spring', bounce: 0.5 }}
-                  className="flex items-center justify-center mb-8"
-                >
-                  <div className="relative">
-                    {/* Glow effect background */}
-                    <div className="absolute inset-0 bg-[#FFD93D] blur-xl opacity-50 rounded-3xl"></div>
-                    {/* Main badge */}
-                    <div className="relative bg-gradient-to-br from-[#FFD93D] to-[#FF6B9D] border-6 border-black rounded-3xl p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                      <Gem className="w-20 h-20 md:w-24 md:h-24 text-black drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]" strokeWidth={2.5} />
-                    </div>
-                  </div>
-                </motion.div>
+									{/* Main Title */}
+									<motion.h4
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: 0.4 }}
+										className="text-4xl md:text-5xl font-black text-black text-center mb-8 leading-tight"
+										style={{ textShadow: '3px 3px 0px rgba(255,255,255,0.3)' }}
+									>
+										STARKNET
+										<br />
+										LEGEND
+									</motion.h4>
+								</div>
 
-                {/* Main Title */}
-                <motion.h4
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="text-4xl md:text-5xl font-black text-black text-center mb-8 leading-tight"
-                  style={{ textShadow: '3px 3px 0px rgba(255,255,255,0.3)' }}
-                >
-                  STARKNET
-                  <br />
-                  LEGEND
-                </motion.h4>
+								<div className="flex flex-col items-center justify-center flex-2">
 
-                {/* Stats Grid with Enhanced Design */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="space-y-3 mb-8"
-                >
-                  {/* Row 1 */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.6 }}
-                      className="bg-[#FFD93D] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Calendar className="w-5 h-5 text-black" strokeWidth={2.5} />
-                        <p className="text-sm md:text-base font-black text-black/70">DAYS STAKED</p>
-                      </div>
-                      <p className="text-3xl md:text-4xl font-black text-black">{userData.act1.accountAge}</p>
-                    </motion.div>
-                    <motion.div 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.7 }}
-                      className="bg-[#6BCF7F] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Activity className="w-5 h-5 text-black" strokeWidth={2.5} />
-                        <p className="text-sm md:text-base font-black text-black/70">TRANSACTIONS</p>
-                      </div>
-                      <p className="text-3xl md:text-4xl font-black text-black">{userData.act1.totalTransactions.toLocaleString()}</p>
-                    </motion.div>
-                  </div>
+									{/* Stats Grid with Enhanced Design */}
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.5 }}
+										className="space-y-3 mb-8"
+									>
+										{/* Row 1 */}
+										<div className="grid grid-cols-2 gap-3">
+											<motion.div 
+												initial={{ opacity: 0, x: -20 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: 0.6 }}
+												className="bg-[#FFD93D] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+											>
+												<div className="flex items-center gap-2 mb-2">
+													<Calendar className="w-5 h-5 text-black" strokeWidth={2.5} />
+													<p className="text-sm md:text-base font-black text-black/70">DAYS STAKED</p>
+												</div>
+												<p className="text-3xl md:text-4xl font-black text-black">{userData.act1.accountAge}</p>
+											</motion.div>
+											<motion.div 
+												initial={{ opacity: 0, x: 20 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: 0.7 }}
+												className="bg-[#6BCF7F] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+											>
+												<div className="flex items-center gap-2 mb-2">
+													<Activity className="w-5 h-5 text-black" strokeWidth={2.5} />
+													<p className="text-sm md:text-base font-black text-black/70">TRANSACTIONS</p>
+												</div>
+												<p className="text-3xl md:text-4xl font-black text-black">{userData.act1.totalTransactions.toLocaleString()}</p>
+											</motion.div>
+										</div>
 
-                  {/* Row 2 */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.8 }}
-                      className="bg-[#C77DFF] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Zap className="w-5 h-5 text-black" strokeWidth={2.5} fill="black" />
-                        <p className="text-sm md:text-base font-black text-black/70">GAS SAVED</p>
-                      </div>
-                      <p className="text-3xl md:text-4xl font-black text-black">${userData.act1.gasSavedUSD.toLocaleString()}</p>
-                    </motion.div>
-                    <motion.div 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.9 }}
-                      className="bg-[#4CC9F0] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Target className="w-5 h-5 text-black" strokeWidth={2.5} />
-                        <p className="text-sm md:text-base font-black text-black/70">PROTOCOLS</p>
-                      </div>
-                      <p className="text-3xl md:text-4xl font-black text-black">{userData.act1.mostActiveMonth}</p>
-                    </motion.div>
-                  </div>
+										{/* Row 2 */}
+										<div className="grid grid-cols-2 gap-3">
+											<motion.div 
+												initial={{ opacity: 0, x: -20 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: 0.8 }}
+												className="bg-[#C77DFF] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+											>
+												<div className="flex items-center gap-2 mb-2">
+													<Zap className="w-5 h-5 text-black" strokeWidth={2.5} fill="black" />
+													<p className="text-sm md:text-base font-black text-black/70">GAS SAVED</p>
+												</div>
+												<p className="text-3xl md:text-4xl font-black text-black">${userData.act1.gasSavedUSD.toLocaleString()}</p>
+											</motion.div>
+											<motion.div 
+												initial={{ opacity: 0, x: 20 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: 0.9 }}
+												className="bg-[#4CC9F0] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+											>
+												<div className="flex items-center gap-2 mb-2">
+													<Target className="w-5 h-5 text-black" strokeWidth={2.5} />
+													<p className="text-sm md:text-base font-black text-black/70">PROTOCOLS</p>
+												</div>
+												<p className="text-3xl md:text-4xl font-black text-black">{userData.act1.mostActiveMonth}</p>
+											</motion.div>
+										</div>
 
-                  {/* Row 3 - Full Width Highlight */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.0 }}
-                    className="bg-gradient-to-r from-[#FFD93D] via-[#FF6B9D] to-[#C77DFF] border-4 border-black rounded-2xl p-5 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="bg-white border-4 border-black rounded-full p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                          <Sparkles className="w-6 h-6 text-black" strokeWidth={2.5} />
-                        </div>
-                        <div>
-                          <p className="text-base md:text-lg font-black text-black/70">GASLESS POWER</p>
-                          <p className="text-2xl md:text-3xl font-black text-black">456 Transactions</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-3xl md:text-4xl font-black text-black">$456</p>
-                        <p className="text-sm font-black text-black/70">SAVED</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                </motion.div>
+										{/* Row 3 - Full Width Highlight */}
+										<motion.div 
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ delay: 1.0 }}
+											className="bg-gradient-to-r from-[#FFD93D] via-[#FF6B9D] to-[#C77DFF] border-4 border-black rounded-2xl p-5 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+										>
+											<div className="flex items-center justify-between">
+												<div className="flex items-center gap-3">
+													<div className="bg-white border-4 border-black rounded-full p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
+														<Sparkles className="w-6 h-6 text-black" strokeWidth={2.5} />
+													</div>
+													<div>
+														<p className="text-base md:text-lg font-black text-black/70">GASLESS POWER</p>
+														<p className="text-2xl md:text-3xl font-black text-black">456 Transactions</p>
+													</div>
+												</div>
+												<div className="text-right">
+													<p className="text-3xl md:text-4xl font-black text-black">$456</p>
+													<p className="text-sm font-black text-black/70">SAVED</p>
+												</div>
+											</div>
+										</motion.div>
+									</motion.div>
 
-                {/* Edition Number */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.1 }}
-                  className="text-center mb-6"
-                >
-                  <div className="inline-block bg-black border-4 border-black px-6 py-2 rounded-xl">
-                    <p className="text-sm font-black text-white">
-                      EDITION #{Math.floor(Math.random() * 9999) + 1} / ∞
-                    </p>
-                  </div>
-                </motion.div>
+									{/* Edition Number */}
+									{/* <motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: 1.1 }}
+										className="text-center mb-6"
+									>
+										<div className="inline-block bg-black border-4 border-black px-6 py-2 rounded-xl">
+											<p className="text-sm font-black text-white">
+												EDITION #{Math.floor(Math.random() * 9999) + 1} / ∞
+											</p>
+										</div>
+									</motion.div> */}
 
-                {/* Share Button - Enhanced */}
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.2, type: 'spring', bounce: 0.5 }}
-                  whileHover={{ scale: 1.05, rotate: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    const text = `🔥 My #StarknetWrapped2025 NFT 🔥\n\n📊 ${userData.act1.accountAge} days staked\n💸 ${userData.act1.totalTransactions.toLocaleString()} transactions\n⚡ $${userData.act1.gasSavedUSD.toLocaleString()} gas saved\n🎯 ${userData.act1.mostActiveMonth} protocols explored\n✨ 456 gasless transactions ($456 saved)\n\nPowered by @Endur_fi 🚀\n\n#Starknet #DeFi #Crypto`;
-                    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-                    window.open(tweetUrl, '_blank');
-                    toast.success('Opening Twitter! 🐦');
-                  }}
-                  className="w-full flex items-center justify-center gap-3 px-8 py-6 bg-black text-white border-4 border-black rounded-2xl font-black text-xl md:text-2xl shadow-[8px_8px_0px_0px_#FFD93D] hover:shadow-[4px_4px_0px_0px_#FFD93D] transition-all relative overflow-hidden group"
-                >
-                  {/* Animated background */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#FFD93D] via-[#FF6B9D] to-[#C77DFF] opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                  <Share2 className="w-7 h-7 relative z-10" />
-                  <span className="relative z-10">SHARE ON X</span>
-                  <Sparkles className="w-6 h-6 relative z-10" />
-                </motion.button>
+									{/* Share Button - Enhanced */}
+									<motion.button
+										initial={{ opacity: 0, scale: 0.8 }}
+										animate={{ opacity: 1, scale: 1 }}
+										transition={{ delay: 1.2, type: 'spring', bounce: 0.5 }}
+										whileHover={{ scale: 1.05, rotate: -1 }}
+										whileTap={{ scale: 0.95 }}
+										onClick={() => {
+											const text = `🔥 My #StarknetWrapped2025 NFT 🔥\n\n📊 ${userData.act1.accountAge} days staked\n💸 ${userData.act1.totalTransactions.toLocaleString()} transactions\n⚡ $${userData.act1.gasSavedUSD.toLocaleString()} gas saved\n🎯 ${userData.act1.mostActiveMonth} protocols explored\n✨ 456 gasless transactions ($456 saved)\n\nPowered by @Endur_fi 🚀\n\n#Starknet #DeFi #Crypto`;
+											const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+											window.open(tweetUrl, '_blank');
+											toast.success('Opening Twitter! 🐦');
+										}}
+										className="w-full flex items-center justify-center gap-3 px-8 py-6 bg-black text-white border-4 border-black rounded-2xl font-black text-xl md:text-2xl shadow-[8px_8px_0px_0px_#FFD93D] hover:shadow-[4px_4px_0px_0px_#FFD93D] transition-all relative overflow-hidden group"
+									>
+										{/* Animated background */}
+										<div className="absolute inset-0 bg-gradient-to-r from-[#FFD93D] via-[#FF6B9D] to-[#C77DFF] opacity-0 group-hover:opacity-20 transition-opacity"></div>
+										<Share2 className="w-7 h-7 relative z-10" />
+										<span className="relative z-10">SHARE ON X</span>
+										<Sparkles className="w-6 h-6 relative z-10" />
+									</motion.button>
 
-                {/* Powered by - Premium style */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.3 }}
-                  className="mt-6 flex items-center justify-center gap-3"
-                >
-                  <span className="font-black text-xs" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>POWERED BY</span>
-                  <img src={endurLogo} alt="Endur.fi" className="h-12" />
-                </motion.div>
-
-                {/* Decorative bottom corners */}
-                <div className="absolute bottom-4 left-4 bg-[#4CC9F0] border-4 border-black rounded-full w-12 h-12 flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                  <Zap className="w-7 h-7 text-black" strokeWidth={2.5} fill="black" />
-                </div>
-                <div className="absolute bottom-4 right-4 bg-[#C77DFF] border-4 border-black rounded-full w-12 h-12 flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                  <Sparkles className="w-7 h-7 text-black" strokeWidth={2.5} />
-                </div>
+									{/* Powered by - Premium style */}
+									{/* <motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: 1.3 }}
+										className="mt-6 flex items-center justify-center gap-3"
+									>
+										<span className="font-black text-xs" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>POWERED BY</span>
+										<img src={endurLogo} alt="Endur.fi" className="h-12" />
+									</motion.div> */}
+								</div>
               </div>
             ) : currentCard.id === '2-1' ? (
               /* STRK & BTC Min/Max Staking Card */
@@ -1313,235 +1303,195 @@ function ActViewer({
             ) : currentCard.id === '2-6' ? (
               /* Act 2 Summary Card - Liquid Staking Wrapped */
               <div
-                className="border-8 border-black rounded-3xl p-8 md:p-10 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
+                className="flex flex-row flex-1 border-8 border-black rounded-3xl p-8 md:p-10 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)] relative overflow-hidden"
                 style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : currentCard.color }}
               >
-                {/* Decorative corner badges */}
-                <div className="absolute top-4 left-4 bg-[#FFD93D] border-4 border-black rounded-full w-12 h-12 flex items-center justify-center z-10 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                  <Droplet className="w-7 h-7 text-black" strokeWidth={2.5} fill="black" />
-                </div>
-                <div className="absolute top-4 right-4 bg-[#4CC9F0] border-4 border-black rounded-full w-12 h-12 flex items-center justify-center z-10 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                  <Sparkles className="w-7 h-7 text-black" strokeWidth={2.5} />
-                </div>
+								<div className="flex flex-col items-center justify-center flex-1">
+									{/* Title Banner */}
+									<motion.div
+										initial={{ opacity: 0, y: -20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.2 }}
+										className="text-center mb-8"
+									>
+										<div className="inline-block bg-black border-4 border-black px-8 py-3 rounded-2xl mb-4">
+											<h3 className="text-xl md:text-2xl font-black text-white">
+												Liquid Staking 2025
+											</h3>
+										</div>
+										<div className="inline-block bg-white/30 border-4 border-black px-6 py-2 rounded-xl">
+											<p className="text-lg font-black text-black">COLLECTOR'S EDITION NFT</p>
+										</div>
+									</motion.div>
 
-                {/* Title Banner */}
-                <motion.div
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="text-center mb-8"
-                >
-                  <div className="inline-block bg-black border-4 border-black px-8 py-3 rounded-2xl mb-4">
-                    <h3 className="text-2xl md:text-3xl font-black text-white">
-                      LIQUID STAKING 2025
-                    </h3>
-                  </div>
-                  <div className="inline-block bg-white/30 border-4 border-black px-6 py-2 rounded-xl">
-                    <p className="text-lg font-black text-black">COLLECTOR'S EDITION NFT</p>
-                  </div>
-                </motion.div>
+									{/* NFT Badge - Larger and More Prominent */}
+									<motion.div
+										initial={{ scale: 0, rotate: -180 }}
+										animate={{ scale: 1, rotate: 0 }}
+										transition={{ delay: 0.3, type: 'spring', bounce: 0.5 }}
+										className="flex items-center justify-center mb-8"
+									>
+										<div className="relative">
+											{/* Glow effect background */}
+											<div className="absolute inset-0 bg-[#FFD93D] blur-xl opacity-50 rounded-3xl"></div>
+											{/* Main badge */}
+											<div className="relative bg-gradient-to-br from-[#FFD93D] to-[#FF6B9D] border-6 border-black rounded-3xl p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+												<Gem className="w-20 h-20 md:w-24 md:h-24 text-black drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]" strokeWidth={2.5} />
+											</div>
+										</div>
+									</motion.div>
 
-                {/* NFT Badge */}
-                <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.3, type: 'spring', bounce: 0.5 }}
-                  className="flex items-center justify-center mb-8"
-                >
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-[#4CC9F0] blur-xl opacity-50 rounded-3xl"></div>
-                    <div className="relative bg-gradient-to-br from-[#6BCF7F] to-[#4CC9F0] border-6 border-black rounded-3xl p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                      <Droplet className="w-20 h-20 md:w-24 md:h-24 text-black drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]" strokeWidth={2.5} />
-                    </div>
-                  </div>
-                </motion.div>
+									{/* Main Title */}
+									<motion.h4
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: 0.4 }}
+										className="text-4xl md:text-5xl font-black text-black text-center mb-8 leading-tight"
+										style={{ textShadow: '3px 3px 0px rgba(255,255,255,0.3)' }}
+									>
+										DIAMOND
+										<br />
+										HANDS
+									</motion.h4>
+								</div>
 
-                {/* Main Title */}
-                <motion.h4
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.4 }}
-                  className="text-4xl md:text-5xl font-black text-black text-center mb-8 leading-tight"
-                  style={{ textShadow: '3px 3px 0px rgba(255,255,255,0.3)' }}
-                >
-                  {userData.act2.isDiamondHand ? 'DIAMOND HANDS' : 'LIQUID LEGEND'}
-                </motion.h4>
+								<div className="flex flex-col items-center justify-center flex-2">
 
-                {/* Stats Grid */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="space-y-3 mb-8"
-                >
-                  {/* Row 1 - Staking Stats */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.6 }}
-                      className="bg-[#FFD93D] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Coins className="w-5 h-5 text-black" strokeWidth={2.5} />
-                        <p className="text-sm md:text-base font-black text-black/70">MAX STRK</p>
-                      </div>
-                      <p className="text-2xl md:text-3xl font-black text-black">{userData.act2.maxStakedSTRK.toLocaleString()}</p>
-                    </motion.div>
-                    <motion.div 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.7 }}
-                      className="bg-[#6BCF7F] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Bitcoin className="w-5 h-5 text-black" strokeWidth={2.5} />
-                        <p className="text-sm md:text-base font-black text-black/70">MAX BTC</p>
-                      </div>
-                      <p className="text-2xl md:text-3xl font-black text-black">{userData.act2.maxStakedBTC}</p>
-                    </motion.div>
-                  </div>
+									{/* Stats Grid with Enhanced Design */}
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.5 }}
+										className="space-y-3 mb-8"
+									>
+										{/* Row 1 */}
+										<div className="grid grid-cols-2 gap-3">
+											<motion.div 
+												initial={{ opacity: 0, x: -20 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: 0.6 }}
+												className="bg-[#FFD93D] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+											>
+												<div className="flex items-center gap-2 mb-2">
+													<Calendar className="w-5 h-5 text-black" strokeWidth={2.5} />
+													<p className="text-sm md:text-base font-black text-black/70">DAYS STAKED</p>
+												</div>
+												<p className="text-3xl md:text-4xl font-black text-black">{userData.act2.endurStakingDays}</p>
+											</motion.div>
+											<motion.div 
+												initial={{ opacity: 0, x: 20 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: 0.7 }}
+												className="bg-[#6BCF7F] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+											>
+												<div className="flex items-center gap-2 mb-2">
+													<Activity className="w-5 h-5 text-black" strokeWidth={2.5} />
+													<p className="text-sm md:text-base font-black text-black/70">DEFI RANK</p>
+												</div>
+												<p className="text-3xl md:text-4xl font-black text-black">{userData.act2.userRank.toLocaleString()}</p>
+											</motion.div>
+										</div>
 
-                  {/* Row 2 - Protocol & LP */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.8 }}
-                      className="bg-[#C77DFF] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Trophy className="w-5 h-5 text-black" strokeWidth={2.5} fill="black" />
-                        <p className="text-sm md:text-base font-black text-black/70">RANK</p>
-                      </div>
-                      <p className="text-2xl md:text-3xl font-black text-black">#{userData.act2.userRank}</p>
-                    </motion.div>
-                    <motion.div 
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.9 }}
-                      className="bg-[#4CC9F0] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                    >
-                      <div className="flex items-center gap-2 mb-2">
-                        <Waves className="w-5 h-5 text-black" strokeWidth={2.5} />
-                        <p className="text-sm md:text-base font-black text-black/70">LP VALUE</p>
-                      </div>
-                      <p className="text-2xl md:text-3xl font-black text-black">${userData.act2.lpValue.toLocaleString()}</p>
-                    </motion.div>
-                  </div>
+										{/* Row 2 */}
+										<div className="grid grid-cols-2 gap-3">
+											<motion.div 
+												initial={{ opacity: 0, x: -20 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: 0.8 }}
+												className="bg-[#C77DFF] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+											>
+												<div className="flex items-center gap-2 mb-2">
+													<Zap className="w-5 h-5 text-black" strokeWidth={2.5} fill="black" />
+													{/* <p className="text-sm md:text-base font-black text-black/70">GAS SAVED</p> */}
+												</div>
+												<p className="text-3xl md:text-4xl font-black text-black">POWER USER</p>
+											</motion.div>
+											<motion.div 
+												initial={{ opacity: 0, x: 20 }}
+												animate={{ opacity: 1, x: 0 }}
+												transition={{ delay: 0.9 }}
+												className="bg-[#4CC9F0] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+											>
+												<div className="flex items-center gap-2 mb-2">
+													<Target className="w-5 h-5 text-black" strokeWidth={2.5} />
+													{/* <p className="text-sm md:text-base font-black text-black/70">PROTOCOLS</p> */}
+												</div>
+												<p className="text-3xl md:text-4xl font-black text-black">DEFI PRO</p>
+											</motion.div>
+										</div>
 
-                  {/* Row 3 - Full Width Highlight - Staking Days & DeFi */}
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1.0 }}
-                    className="bg-gradient-to-r from-[#FFD93D] via-[#FF6B9D] to-[#C77DFF] border-4 border-black rounded-2xl p-5 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="bg-white border-4 border-black rounded-full p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                          <Calendar className="w-6 h-6 text-black" strokeWidth={2.5} />
-                        </div>
-                        <div>
-                          <p className="text-base md:text-lg font-black text-black/70">STAKING DAYS</p>
-                          <p className="text-2xl md:text-3xl font-black text-black">{userData.act2.endurStakingDays} Days</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-3xl md:text-4xl font-black text-black">${userData.act2.defiTotalValue.toLocaleString()}</p>
-                        <p className="text-sm font-black text-black/70">DeFi VALUE</p>
-                      </div>
-                    </div>
-                  </motion.div>
+										{/* Row 3 - Full Width Highlight */}
+										<motion.div 
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ delay: 1.0 }}
+											className="bg-gradient-to-r from-[#FFD93D] via-[#FF6B9D] to-[#C77DFF] border-4 border-black rounded-2xl p-5 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]"
+										>
+											<div className="flex items-center justify-center gap-1">
+												<div className="flex items-center gap-3">
+													<div className="bg-white border-4 border-black rounded-full p-2 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
+														<Sparkles className="w-6 h-6 text-black" strokeWidth={2.5} />
+													</div>
+													{/* <div>
+														<p className="text-base md:text-lg font-black text-black/70">GASLESS POWER</p>
+														<p className="text-2xl md:text-3xl font-black text-black">456 Transactions</p>
+													</div> */}
+												</div>
+												<div className="text-right">
+													<p className="text-3xl md:text-4xl font-black text-black">Yield Hunter</p>
+													{/* <p className="text-sm font-black text-black/70">SAVED</p> */}
+												</div>
+											</div>
+										</motion.div>
+									</motion.div>
 
-                  {/* Achievements Row */}
-                  {(userData.act2.isTop1000 || userData.act2.isDiamondHand || userData.act2.hasDeFiPositions) && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 1.1 }}
-                      className="bg-white/30 border-4 border-black rounded-2xl p-4"
-                    >
-                      <p className="text-center text-base md:text-lg font-black text-black mb-2">🏆 ACHIEVEMENTS</p>
-                      <div className="flex flex-wrap gap-2 justify-center">
-                        {userData.act2.isTop1000 && (
-                          <span className="bg-[#FFD93D] border-2 border-black px-3 py-1 rounded-lg text-sm font-black">
-                            🏆 TOP 1000
-                          </span>
-                        )}
-                        {userData.act2.isDiamondHand && (
-                          <span className="bg-[#6BCF7F] border-2 border-black px-3 py-1 rounded-lg text-sm font-black">
-                            💎 DIAMOND HANDS
-                          </span>
-                        )}
-                        {userData.act2.hasDeFiPositions && (
-                          <span className="bg-[#4CC9F0] border-2 border-black px-3 py-1 rounded-lg text-sm font-black">
-                            ✨ TRUE ENDUR USER
-                          </span>
-                        )}
-                        {userData.act2.isLongTermStaker && (
-                          <span className="bg-[#C77DFF] border-2 border-black px-3 py-1 rounded-lg text-sm font-black">
-                            🔥 LONG-TERM STAKER
-                          </span>
-                        )}
-                      </div>
-                    </motion.div>
-                  )}
-                </motion.div>
+									{/* Edition Number */}
+									{/* <motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: 1.1 }}
+										className="text-center mb-6"
+									>
+										<div className="inline-block bg-black border-4 border-black px-6 py-2 rounded-xl">
+											<p className="text-sm font-black text-white">
+												EDITION #{Math.floor(Math.random() * 9999) + 1} / ∞
+											</p>
+										</div>
+									</motion.div> */}
 
-                {/* Edition Number */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.2 }}
-                  className="text-center mb-6"
-                >
-                  <div className="inline-block bg-black border-4 border-black px-6 py-2 rounded-xl">
-                    <p className="text-sm font-black text-white">
-                      EDITION #{Math.floor(Math.random() * 9999) + 1} / ∞
-                    </p>
-                  </div>
-                </motion.div>
+									{/* Share Button - Enhanced */}
+									<motion.button
+										initial={{ opacity: 0, scale: 0.8 }}
+										animate={{ opacity: 1, scale: 1 }}
+										transition={{ delay: 1.2, type: 'spring', bounce: 0.5 }}
+										whileHover={{ scale: 1.05, rotate: -1 }}
+										whileTap={{ scale: 0.95 }}
+										onClick={() => {
+											const text = `🔥 My #StarknetWrapped2025 NFT 🔥\n\n📊 ${userData.act1.accountAge} days staked\n💸 ${userData.act1.totalTransactions.toLocaleString()} transactions\n⚡ $${userData.act1.gasSavedUSD.toLocaleString()} gas saved\n🎯 ${userData.act1.mostActiveMonth} protocols explored\n✨ 456 gasless transactions ($456 saved)\n\nPowered by @Endur_fi 🚀\n\n#Starknet #DeFi #Crypto`;
+											const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+											window.open(tweetUrl, '_blank');
+											toast.success('Opening Twitter! 🐦');
+										}}
+										className="w-full flex items-center justify-center gap-3 px-8 py-6 bg-black text-white border-4 border-black rounded-2xl font-black text-xl md:text-2xl shadow-[8px_8px_0px_0px_#FFD93D] hover:shadow-[4px_4px_0px_0px_#FFD93D] transition-all relative overflow-hidden group"
+									>
+										{/* Animated background */}
+										<div className="absolute inset-0 bg-gradient-to-r from-[#FFD93D] via-[#FF6B9D] to-[#C77DFF] opacity-0 group-hover:opacity-20 transition-opacity"></div>
+										<Share2 className="w-7 h-7 relative z-10" />
+										<span className="relative z-10">SHARE ON X</span>
+										<Sparkles className="w-6 h-6 relative z-10" />
+									</motion.button>
 
-                {/* Share Button */}
-                <motion.button
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 1.3, type: 'spring', bounce: 0.5 }}
-                  whileHover={{ scale: 1.05, rotate: -1 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => {
-                    const text = `🔥 My Liquid Staking #StarknetWrapped2025 🔥\\n\\n💧 ${userData.act2.maxStakedSTRK.toLocaleString()} STRK staked\\n₿ ${userData.act2.maxStakedBTC} BTC staked\\n🏆 Rank #${userData.act2.userRank}${userData.act2.isTop1000 ? ' (Top 1000!)' : ''}\\n💰 $${userData.act2.lpValue.toLocaleString()} LP value\\n📅 ${userData.act2.endurStakingDays} days staking\\n✨ $${userData.act2.defiTotalValue.toLocaleString()} DeFi value\\n\\n${userData.act2.isDiamondHand ? '💎 Diamond Hands' : ''}${userData.act2.hasDeFiPositions ? ' ✨ True Endur User' : ''}\\n\\nPowered by @Endur_fi 🚀\\n\\n#Starknet #DeFi #Crypto`;
-                    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-                    window.open(tweetUrl, '_blank');
-                    toast.success('Opening Twitter! 🐦');
-                  }}
-                  className="w-full flex items-center justify-center gap-3 px-8 py-6 bg-black text-white border-4 border-black rounded-2xl font-black text-xl md:text-2xl shadow-[8px_8px_0px_0px_#6BCF7F] hover:shadow-[4px_4px_0px_0px_#6BCF7F] transition-all relative overflow-hidden group"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-[#6BCF7F] via-[#4CC9F0] to-[#C77DFF] opacity-0 group-hover:opacity-20 transition-opacity"></div>
-                  <Share2 className="w-7 h-7 relative z-10" />
-                  <span className="relative z-10">SHARE ON X</span>
-                  <Sparkles className="w-6 h-6 relative z-10" />
-                </motion.button>
-
-                {/* Powered by */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 1.4 }}
-                  className="mt-6 flex items-center justify-center gap-3"
-                >
-                  <span className="font-black text-xs" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>POWERED BY</span>
-                  <img src={endurLogo} alt="Endur.fi" className="h-12" />
-                </motion.div>
-
-                {/* Decorative bottom corners */}
-                <div className="absolute bottom-4 left-4 bg-[#FFD93D] border-4 border-black rounded-full w-12 h-12 flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                  <Waves className="w-7 h-7 text-black" strokeWidth={2.5} />
-                </div>
-                <div className="absolute bottom-4 right-4 bg-[#FF6B9D] border-4 border-black rounded-full w-12 h-12 flex items-center justify-center shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)]">
-                  <Trophy className="w-7 h-7 text-black" strokeWidth={2.5} fill="black" />
-                </div>
+									{/* Powered by - Premium style */}
+									{/* <motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: 1.3 }}
+										className="mt-6 flex items-center justify-center gap-3"
+									>
+										<span className="font-black text-xs" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>POWERED BY</span>
+										<img src={endurLogo} alt="Endur.fi" className="h-12" />
+									</motion.div> */}
+								</div>
               </div>
             ) : currentCard.id === '3-4' ? (
               /* Act 3 Summary Card - Native Staking Wrapped */

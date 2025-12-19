@@ -3,7 +3,7 @@ import type { UserWrappedData } from '../types/user';
 
 // Helper: Convert wei to token amount (divide by 10^18)
 function weiToToken(wei: string): number {
-  const weiValue = BigInt(wei);
+  const weiValue = BigInt(wei.split('.')[0]);
   const divisor = BigInt(10 ** 18);
   return Number(weiValue / divisor);
 }
@@ -45,8 +45,8 @@ export function mapApiDataToUserData(
   } as any;
 
   // Map Act 2 data from wrappedData
-  const maxStrkStaked = Number(BigInt(wrappedData.stakingStats.maxStrkStaked) / BigInt(10 ** 18));
-  const minStrkStaked = Number(BigInt(wrappedData.stakingStats.minStrkStaked) / BigInt(10 ** 18));
+  const maxStrkStaked = Number(wrappedData.stakingStats.maxStrkStaked);
+  const minStrkStaked = Number(wrappedData.stakingStats.minStrkStaked);
 
   const act2 = {
     xSTRKHoldings: maxStrkStaked, // Using max as current holdings
@@ -55,7 +55,7 @@ export function mapApiDataToUserData(
     lpPositions: wrappedData.hasQualifyingLpPosition ? 1 : 0,
     avgAPR: 0, // HARDCODED - not available from API
     season1Points: wrappedData.season1Rank?.weightedPoints 
-      ? Number(BigInt(wrappedData.season1Rank.weightedPoints.split('.')[0]) / BigInt(10 ** 18))
+      ? Number(wrappedData.season1Rank.weightedPoints)
       : 0,
     season1Rank: wrappedData.season1Rank?.rank 
       ? wrappedData.season1Rank.rank <= 100 
