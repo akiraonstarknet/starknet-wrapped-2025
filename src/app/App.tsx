@@ -7,6 +7,7 @@ import TwitterLogo from '../imports/TwitterLogo';
 import { fetchAllWrappedData } from '../lib/api';
 import { mapApiDataToUserData } from '../lib/dataMapper';
 import type { UserWrappedData } from '../types/user';
+import { handleTwitterSignIn, handleSignOut } from '../actions/auth';
 import {
   Rocket,
   Droplet,
@@ -300,23 +301,56 @@ function LoadingScreen({ isTurquoiseMode }: { isTurquoiseMode: boolean }) {
 function LandingScreen({ 
   onStart, 
   isTurquoiseMode, 
-  toggleTurquoiseMode 
+  toggleTurquoiseMode,
+  session 
 }: { 
   onStart: (walletAddresses: string[]) => void; 
   isTurquoiseMode: boolean; 
-  toggleTurquoiseMode: () => void 
+  toggleTurquoiseMode: () => void;
+  session: any;
 }) {
-  const [isTwitterConnected, setIsTwitterConnected] = useState(false);
-  const [twitterUsername, setTwitterUsername] = useState('');
   const [walletAddresses, setWalletAddresses] = useState<string[]>([]);
   const [newWalletInput, setNewWalletInput] = useState('');
   const [error, setError] = useState('');
 
-  const handleTwitterConnect = () => {
-    // Mock Twitter OAuth - in production, this would open Twitter OAuth flow
-    setIsTwitterConnected(true);
-    setTwitterUsername('@DegenOnStarknet'); // Mock username
-    toast.success('Connected with Twitter! 🐦');
+  const isTwitterConnected = !!session?.user;
+  const twitterUsername = session?.user?.name ? `@${session.user.name}` : '';
+
+  // Load wallet addresses from localStorage on mount
+  useEffect(() => {
+    const savedAddresses = localStorage.getItem('walletAddresses');
+    if (savedAddresses) {
+      try {
+        const parsed = JSON.parse(savedAddresses);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setWalletAddresses(parsed);
+        }
+      } catch (error) {
+        console.error('Error parsing saved addresses:', error);
+      }
+    }
+  }, []);
+
+  // Save wallet addresses to localStorage whenever they change
+  useEffect(() => {
+    if (walletAddresses.length > 0) {
+      localStorage.setItem('walletAddresses', JSON.stringify(walletAddresses));
+    } else {
+      localStorage.removeItem('walletAddresses');
+    }
+  }, [walletAddresses]);
+
+  const handleTwitterConnect = async () => {
+    try {
+      // Save wallet addresses before redirecting to Twitter OAuth
+      if (walletAddresses.length > 0) {
+        localStorage.setItem('walletAddresses', JSON.stringify(walletAddresses));
+      }
+      await handleTwitterSignIn();
+    } catch (error) {
+      console.error('Twitter sign in error:', error);
+      toast.error('Failed to connect with Twitter');
+    }
   };
 
   const handleAddWallet = () => {
@@ -362,6 +396,9 @@ function LandingScreen({
       return;
     }
     
+    // Clear localStorage before proceeding
+    localStorage.removeItem('walletAddresses');
+    
     // Proceed to wrapped experience with wallet addresses
     onStart(walletAddresses);
   };
@@ -376,6 +413,9 @@ function LandingScreen({
       toast.error('Connect with Twitter first!');
       return;
     }
+    
+    // Clear localStorage before proceeding
+    localStorage.removeItem('walletAddresses');
     
     onStart(walletAddresses);
   };
@@ -542,7 +582,26 @@ function LandingScreen({
                       <p className="text-xl font-black text-black">{twitterUsername}</p>
                     </div>
                   </div>
-                  <Check className="w-6 h-6 text-[#6BCF7F]" />
+                  <div className="flex items-center gap-2">
+                    <Check className="w-6 h-6 text-[#6BCF7F]" />
+                    <motion.button
+                      onClick={async () => {
+                        try {
+                          await handleSignOut();
+                          toast.success('Disconnected from Twitter');
+                        } catch (error) {
+                          console.error('Sign out error:', error);
+                          toast.error('Failed to disconnect');
+                        }
+                      }}
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      className="p-2 hover:bg-[#FF6B9D] border-2 border-black rounded-lg transition-colors"
+                      title="Disconnect Twitter"
+                    >
+                      <X className="w-5 h-5 text-black" />
+                    </motion.button>
+                  </div>
                 </div>
               )}
             </motion.div>
@@ -1930,7 +1989,7 @@ function ActViewer({
   );
 }
 
-export default function App() {
+export default function App({ session }: { session: any }) {
   const [screen, setScreen] = useState<'landing' | 'dashboard' | 'act' | 'loading'>(
     'landing'
   );
@@ -2034,6 +2093,7 @@ export default function App() {
               onStart={handleStart} 
               isTurquoiseMode={isTurquoiseMode}
               toggleTurquoiseMode={toggleTurquoiseMode}
+              session={session}
             />
           </motion.div>
         )}
