@@ -1,8 +1,7 @@
-import image_eb8b1b0f9d529bddb7455a7756fbecb420fb6b08 from '../assets/eb8b1b0f9d529bddb7455a7756fbecb420fb6b08.png';
-import image_3e42fce03399e38ff4bc7b7ac1aac5523d7f5b21 from '../assets/3e42fce03399e38ff4bc7b7ac1aac5523d7f5b21.png';
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'motion/react';
-import mentorImage from '../assets/f4fbdc80ee72c690b4f2b7319e431b41c607dbef.png';
 import DefiBackgroundIllustrations from '../imports/DefiBackgroundIllustrations';
 import TwitterLogo from '../imports/TwitterLogo';
 import { fetchAllWrappedData } from '../lib/api';
@@ -47,10 +46,15 @@ import {
   Trash2,
 } from 'lucide-react';
 import { toast, Toaster } from 'sonner';
-import endurLogo from '../assets/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
-import protocol1 from '../assets/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
-import protocol2 from '../assets/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
-import protocol3 from '../assets/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
+
+// Asset paths
+const image_eb8b1b0f9d529bddb7455a7756fbecb420fb6b08 = '/eb8b1b0f9d529bddb7455a7756fbecb420fb6b08.png';
+const image_3e42fce03399e38ff4bc7b7ac1aac5523d7f5b21 = '/3e42fce03399e38ff4bc7b7ac1aac5523d7f5b21.png';
+const mentorImage = '/f4fbdc80ee72c690b4f2b7319e431b41c607dbef.png';
+const endurLogo = '/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
+const protocol1 = '/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
+const protocol2 = '/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
+const protocol3 = '/b9c5f69ed5e93b116d0bf806f8c969da4fe4d221.png';
 
 // Data Types
 export interface Badge {

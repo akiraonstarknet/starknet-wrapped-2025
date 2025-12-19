@@ -1,7 +1,7 @@
 import { GraphQLClient } from 'graphql-request';
 import type { WrappedDataResponse, JourneyDataResponse } from '../types/api';
 
-const GRAPHQL_ENDPOINT = import.meta.env.VITE_GRAPHQL_ENDPOINT || 'http://localhost:4001/graphql';
+const GRAPHQL_ENDPOINT = process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT || 'http://localhost:4001/graphql';
 
 const client = new GraphQLClient(GRAPHQL_ENDPOINT);
 
