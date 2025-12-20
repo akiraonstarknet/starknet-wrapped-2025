@@ -312,6 +312,8 @@ function LandingScreen({
     totalTransactionsChange: 238, // % change vs 2024 // 1720000 page 
     blockTimeSeconds: 0.5, // Block time in seconds
     blockTimeChange: -40, // % change vs 2024 (negative = faster)
+    btcTVL: 200000000, // BTC TVL in USD
+    btcTVLChange: 2000, // % change vs 2024
   };
 
   // Load wallet addresses from localStorage on mount
@@ -462,7 +464,7 @@ function LandingScreen({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.35 }}
-            className="w-full max-w-5xl mx-auto mb-12 grid grid-cols-1 md:grid-cols-3 gap-4"
+            className="w-full max-w-5xl mx-auto mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4"
           >
             {/* Max TPS Card */}
             <motion.div
@@ -519,6 +521,28 @@ function LandingScreen({
               </p>
               <p className="text-xs font-black text-black/60">
                 {statsData.blockTimeChange > 0 ? '+' : ''}{statsData.blockTimeChange}% vs 2024
+              </p>
+            </motion.div>
+
+            {/* BTC TVL Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.55 }}
+              className="bg-[#FF8C42] border-4 border-black rounded-2xl p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            >
+              <p className="text-xs md:text-sm font-black text-black/70 mb-2 uppercase tracking-wide">
+                BTC TVL
+              </p>
+              <p className="text-4xl md:text-5xl font-black text-black mb-2 leading-none">
+                ${statsData.btcTVL >= 1000000 
+                  ? `${(statsData.btcTVL / 1000000).toFixed(0)}M+`
+                  : statsData.btcTVL >= 1000
+                  ? `${(statsData.btcTVL / 1000).toFixed(1)}K`
+                  : `$${statsData.btcTVL.toLocaleString()}`}
+              </p>
+              <p className="text-xs font-black text-black/60">
+                {statsData.btcTVLChange > 0 ? '+' : ''}{statsData.btcTVLChange}% vs 2024
               </p>
             </motion.div>
           </motion.div>
@@ -771,7 +795,7 @@ function LandingScreen({
                             <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
                               Stage 1 Rollup
                             </h3>
-                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                            <p className="text-sm font-bold opacity-90 text-left" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
                               Starknet achieves Stage 1 rollup status, marking a major milestone in decentralization and security.
                             </p>
                           </div>
@@ -812,7 +836,7 @@ function LandingScreen({
                             <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
                               Extended Live on Starknet
                             </h3>
-                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                            <p className="text-sm font-bold opacity-90 text-left" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
                               Extended protocol goes live, bringing new DeFi capabilities to the Starknet ecosystem.
                             </p>
                           </div>
@@ -853,7 +877,7 @@ function LandingScreen({
                             <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
                               Troves Launches Ekubo CL Vaults
                             </h3>
-                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                            <p className="text-sm font-bold opacity-90 text-left" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
                               Troves partners with Re7 Labs to launch Ekubo CL Vaults, expanding liquidity options.
                             </p>
                           </div>
@@ -897,13 +921,13 @@ function LandingScreen({
                             <div className="space-y-2 mt-3">
                               <div className="flex items-start gap-2">
                                 <span className="text-xs font-black mt-1" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>a.</span>
-                                <p className="text-sm font-bold opacity-90 flex-1" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                                <p className="text-sm font-bold opacity-90 flex-1 text-left" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
                                   Endur hits <span className="font-black" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>$50M+</span> in TVL
                                 </p>
                               </div>
                               <div className="flex items-start gap-2">
                                 <span className="text-xs font-black mt-1" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>b.</span>
-                                <p className="text-sm font-bold opacity-90 flex-1" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                                <p className="text-sm font-bold opacity-90 flex-1 text-left" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
                                   Vesu V2 launch, <span className="font-black" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>$60M+</span> TVL
                                 </p>
                               </div>
@@ -943,10 +967,10 @@ function LandingScreen({
                                 Nov 2025
                               </span>
                             </div>
-                            <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
+                            <h3 className="text-xl text-left font-black mb-2 text-left" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
                               S-two Integration
                             </h3>
-                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                            <p className="text-sm font-bold opacity-90 text-left" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
                               S-two protocol integrates with Starknet, enabling new cross-chain capabilities.
                             </p>
                           </div>
@@ -987,7 +1011,7 @@ function LandingScreen({
                             <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
                               Native USDC
                             </h3>
-                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                            <p className="text-sm font-bold opacity-90 text-left" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
                               Native USDC launches on Starknet, bringing seamless dollar-pegged stablecoin to the ecosystem.
                             </p>
                           </div>
