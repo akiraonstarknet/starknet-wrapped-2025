@@ -304,6 +304,16 @@ function LandingScreen({
   const isTwitterConnected = !!session?.user;
   const twitterUsername = session?.user?.name ? `@${session.user.name}` : '';
 
+  // Dummy stats data - replace with real data from API
+  const statsData = {
+    maxTPS: 992,
+    maxTPSChange: 1000, // % change vs 2024
+    totalTransactions: 1208000 * 100, // Total transactions
+    totalTransactionsChange: 238, // % change vs 2024 // 1720000 page 
+    blockTimeSeconds: 0.5, // Block time in seconds
+    blockTimeChange: -40, // % change vs 2024 (negative = faster)
+  };
+
   // Load wallet addresses from localStorage on mount
   useEffect(() => {
     const savedAddresses = localStorage.getItem('walletAddresses');
@@ -396,7 +406,33 @@ function LandingScreen({
       <AnimatedDefiBackground />
       <Ticker isTurquoiseMode={isTurquoiseMode} />
       
+      {/* "Endur your STRK" - Rotated decorative text on right side */}
+      {/* <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6 }}
+        className="hidden lg:block fixed right-0 xl:right-0 top-1/2 pointer-events-none z-20"
+        style={{
+          transform: 'translateY(-50%) rotate(90deg)',
+          transformOrigin: 'center',
+        }}
+      >
+        <p
+          className="text-4xl md:text-6xl xl:text-7xl font-bold whitespace-nowrap"
+          style={{
+            fontFamily: "'Chalkduster', cursive",
+            color: isTurquoiseMode ? '#00FFEF' : 'white',
+            textShadow: '4px 4px 0px rgba(0,0,0,0.4), 0 0 20px rgba(0,222,113,0.3)',
+            letterSpacing: '0.1em',
+            fontWeight: 700,
+          }}
+        >
+          Endur your STRK
+        </p>
+      </motion.div> */}
+
       <div className="flex-1 flex flex-col items-center justify-center p-6 relative z-10">
+
         {/* Main content */}
         <motion.div
           initial={{ y: 50, opacity: 0 }}
@@ -420,6 +456,72 @@ function LandingScreen({
             <br />
             2025
           </motion.h1>
+
+          {/* Stats Cards - Dummy values, replace with real data */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.35 }}
+            className="w-full max-w-5xl mx-auto mb-12 grid grid-cols-1 md:grid-cols-3 gap-4"
+          >
+            {/* Max TPS Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.4 }}
+              className="bg-[#FFD93D] border-4 border-black rounded-2xl p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            >
+              <p className="text-xs md:text-sm font-black text-black/70 mb-2 uppercase tracking-wide">
+                Max TPS
+              </p>
+              <p className="text-4xl md:text-5xl font-black text-black mb-2 leading-none">
+                {statsData.maxTPS.toLocaleString()}
+              </p>
+              <p className="text-xs font-black text-black/60">
+                {statsData.maxTPSChange > 0 ? '+' : ''}{statsData.maxTPSChange}% vs 2024
+              </p>
+            </motion.div>
+
+            {/* Transactions Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.45 }}
+              className="bg-[#6BCF7F] border-4 border-black rounded-2xl p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            >
+              <p className="text-xs md:text-sm font-black text-black/70 mb-2 uppercase tracking-wide">
+                #Transactions
+              </p>
+              <p className="text-4xl md:text-5xl font-black text-black mb-2 leading-none">
+                {statsData.totalTransactions >= 1000000 
+                  ? `${(statsData.totalTransactions / 1000000).toFixed(1)}M`
+                  : statsData.totalTransactions >= 1000
+                  ? `${(statsData.totalTransactions / 1000).toFixed(1)}K`
+                  : statsData.totalTransactions.toLocaleString()}
+              </p>
+              <p className="text-xs font-black text-black/60">
+                {statsData.totalTransactionsChange > 0 ? '+' : ''}{statsData.totalTransactionsChange}% vs 2024
+              </p>
+            </motion.div>
+
+            {/* Block Times Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.5 }}
+              className="bg-[#FF6B9D] border-4 border-black rounded-2xl p-6 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+            >
+              <p className="text-xs md:text-sm font-black text-black/70 mb-2 uppercase tracking-wide">
+                Block Times
+              </p>
+              <p className="text-4xl md:text-5xl font-black text-black mb-2 leading-none">
+                {statsData.blockTimeSeconds}s
+              </p>
+              <p className="text-xs font-black text-black/60">
+                {statsData.blockTimeChange > 0 ? '+' : ''}{statsData.blockTimeChange}% vs 2024
+              </p>
+            </motion.div>
+          </motion.div>
 
           {/* Subtitle */}
           <motion.p
@@ -499,7 +601,7 @@ function LandingScreen({
                         <div className="bg-[#6BCF7F] border-4 border-black rounded-full w-10 h-10 flex items-center justify-center">
                           <span className="text-black font-black">{index + 1}</span>
                         </div>
-                        <p className="text-lg font-bold text-black font-mono">{address}</p>
+                        <p className="text-lg font-bold text-black font-mono">{address.slice(0, 10)}...{address.slice(-10)}</p>
                       </div>
                       <motion.button
                         onClick={() => handleRemoveWallet(address)}
@@ -596,6 +698,306 @@ function LandingScreen({
               </motion.button>
             </motion.div>
           )}
+
+          {/* Year timeline for Starknet */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-12 mb-8"
+          >
+            <div className="text-center mb-8">
+              <h2
+                className="text-3xl md:text-4xl font-black mb-2"
+                style={{ 
+                  color: isTurquoiseMode ? '#00FFEF' : '#00DE71',
+                  textShadow: isTurquoiseMode 
+                    ? '0 0 20px rgba(0, 255, 239, 0.6), 0 0 40px rgba(0, 255, 239, 0.4), 3px 3px 0px rgba(0,0,0,0.3)' 
+                    : '3px 3px 0px rgba(0,0,0,0.3)' 
+                }}
+              >
+                2025 ON STARKNET
+              </h2>
+              <p className="text-sm font-black opacity-70" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>
+                Scroll to explore the highlights ↓
+              </p>
+            </div>
+
+            {/* Vertical Timeline Container */}
+            <div className="relative max-w-3xl mx-auto">
+              {/* Vertical Timeline with connecting line */}
+              <div className="relative pl-12 md:pl-16">
+                {/* Vertical connecting line */}
+                <div 
+                  className="absolute top-0 bottom-0 w-1"
+                  style={{ 
+                    backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71',
+                    left: '-0.5rem'
+                  }}
+                />
+                
+                {/* Timeline */}
+                <div className="space-y-8 pb-6">
+                    {/* Timeline Item 1: Stage 1 Rollup */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="relative"
+                    >
+                      {/* Timeline dot */}
+                      <div
+                        className="absolute -left-14 md:-left-16 top-6 w-4 h-4 rounded-full border-4 border-black z-10"
+                        style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
+                      />
+                      <div
+                        className="p-6 border-4 border-black rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative"
+                        style={{ backgroundColor: isTurquoiseMode ? '#004d4d' : '#026b5f' }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div
+                            className="flex-shrink-0 w-12 h-12 rounded-xl border-4 border-black flex items-center justify-center font-black text-xl"
+                            style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71', color: '#000000' }}
+                          >
+                            1
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex gap-2 mb-2">
+                              <Rocket className="w-5 h-5" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }} />
+                              <span className="text-xs font-black uppercase tracking-wider" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>
+                                May 2025
+                              </span>
+                            </div>
+                            <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
+                              Stage 1 Rollup
+                            </h3>
+                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                              Starknet achieves Stage 1 rollup status, marking a major milestone in decentralization and security.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Timeline Item 2: Extended Live on Starknet */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 }}
+                      className="relative"
+                    >
+                      {/* Timeline dot */}
+                      <div
+                        className="absolute -left-14 md:-left-16 top-6 w-4 h-4 rounded-full border-4 border-black z-10"
+                        style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
+                      />
+                      <div
+                        className="p-6 border-4 border-black rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative"
+                        style={{ backgroundColor: isTurquoiseMode ? '#004d4d' : '#026b5f' }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div
+                            className="flex-shrink-0 w-12 h-12 rounded-xl border-4 border-black flex items-center justify-center font-black text-xl"
+                            style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71', color: '#000000' }}
+                          >
+                            2
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex gap-2 mb-2">
+                              <Zap className="w-5 h-5" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }} />
+                              <span className="text-xs font-black uppercase tracking-wider" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>
+                                Aug 2025
+                              </span>
+                            </div>
+                            <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
+                              Extended Live on Starknet
+                            </h3>
+                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                              Extended protocol goes live, bringing new DeFi capabilities to the Starknet ecosystem.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Timeline Item 3: Troves launches Ekubo CL Vaults */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.7 }}
+                      className="relative"
+                    >
+                      {/* Timeline dot */}
+                      <div
+                        className="absolute -left-14 md:-left-16 top-6 w-4 h-4 rounded-full border-4 border-black z-10"
+                        style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
+                      />
+                      <div
+                        className="p-6 border-4 border-black rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative"
+                        style={{ backgroundColor: isTurquoiseMode ? '#004d4d' : '#026b5f' }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div
+                            className="flex-shrink-0 w-12 h-12 rounded-xl border-4 border-black flex items-center justify-center font-black text-xl"
+                            style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71', color: '#000000' }}
+                          >
+                            3
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex gap-2 mb-2">
+                              <Gem className="w-5 h-5" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }} />
+                              <span className="text-xs font-black uppercase tracking-wider" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>
+                                Sep 2025
+                              </span>
+                            </div>
+                            <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
+                              Troves Launches Ekubo CL Vaults
+                            </h3>
+                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                              Troves partners with Re7 Labs to launch Ekubo CL Vaults, expanding liquidity options.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Timeline Item 4: BTC Staking */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8 }}
+                      className="relative"
+                    >
+                      {/* Timeline dot */}
+                      <div
+                        className="absolute -left-14 md:-left-16 top-6 w-4 h-4 rounded-full border-4 border-black z-10"
+                        style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
+                      />
+                      <div
+                        className="p-6 border-4 border-black rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative"
+                        style={{ backgroundColor: isTurquoiseMode ? '#004d4d' : '#026b5f' }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div
+                            className="flex-shrink-0 w-12 h-12 rounded-xl border-4 border-black flex items-center justify-center font-black text-xl"
+                            style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71', color: '#000000' }}
+                          >
+                            4
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex gap-2 mb-2">
+                              <Bitcoin className="w-5 h-5" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }} />
+                              <span className="text-xs font-black uppercase tracking-wider" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>
+                                Oct 2025
+                              </span>
+                            </div>
+                            <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
+                              BTC Staking
+                            </h3>
+                            <div className="space-y-2 mt-3">
+                              <div className="flex items-start gap-2">
+                                <span className="text-xs font-black mt-1" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>a.</span>
+                                <p className="text-sm font-bold opacity-90 flex-1" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                                  Endur hits <span className="font-black" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>$50M+</span> in TVL
+                                </p>
+                              </div>
+                              <div className="flex items-start gap-2">
+                                <span className="text-xs font-black mt-1" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>b.</span>
+                                <p className="text-sm font-bold opacity-90 flex-1" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                                  Vesu V2 launch, <span className="font-black" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>$60M+</span> TVL
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Timeline Item 5: S-two integration */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.9 }}
+                      className="relative"
+                    >
+                      {/* Timeline dot */}
+                      <div
+                        className="absolute -left-14 md:-left-16 top-6 w-4 h-4 rounded-full border-4 border-black z-10"
+                        style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
+                      />
+                      <div
+                        className="p-6 border-4 border-black rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative"
+                        style={{ backgroundColor: isTurquoiseMode ? '#004d4d' : '#026b5f' }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div
+                            className="flex-shrink-0 w-12 h-12 rounded-xl border-4 border-black flex items-center justify-center font-black text-xl"
+                            style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71', color: '#000000' }}
+                          >
+                            5
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex gap-2 mb-2">
+                              <Activity className="w-5 h-5" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }} />
+                              <span className="text-xs font-black uppercase tracking-wider" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>
+                                Nov 2025
+                              </span>
+                            </div>
+                            <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
+                              S-two Integration
+                            </h3>
+                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                              S-two protocol integrates with Starknet, enabling new cross-chain capabilities.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+
+                    {/* Timeline Item 6: Native USDC */}
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 1.0 }}
+                      className="relative"
+                    >
+                      {/* Timeline dot */}
+                      <div
+                        className="absolute -left-14 md:-left-16 top-6 w-4 h-4 rounded-full border-4 border-black z-10"
+                        style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
+                      />
+                      <div
+                        className="p-6 border-4 border-black rounded-2xl shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] relative"
+                        style={{ backgroundColor: isTurquoiseMode ? '#004d4d' : '#026b5f' }}
+                      >
+                        <div className="flex items-start gap-4">
+                          <div
+                            className="flex-shrink-0 w-12 h-12 rounded-xl border-4 border-black flex items-center justify-center font-black text-xl"
+                            style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71', color: '#000000' }}
+                          >
+                            6
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex gap-2 mb-2">
+                              <Coins className="w-5 h-5" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }} />
+                              <span className="text-xs font-black uppercase tracking-wider" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>
+                                Dec 2025
+                              </span>
+                            </div>
+                            <h3 className="text-xl text-left font-black mb-2" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#FFFFFF' }}>
+                              Native USDC
+                            </h3>
+                            <p className="text-sm font-bold opacity-90" style={{ color: isTurquoiseMode ? '#E0FFFF' : '#E0F8F0' }}>
+                              Native USDC launches on Starknet, bringing seamless dollar-pegged stablecoin to the ecosystem.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+          </motion.div>
 
           {/* Powered by */}
           <motion.div
@@ -1103,7 +1505,7 @@ function ActViewer({
 												transition={{ delay: 0.6 }}
 												className="bg-[#FFD93D] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
 											>
-												<div className="flex items-center gap-2 mb-2">
+												<div className="flex gap-2 mb-2">
 													<Calendar className="w-5 h-5 text-black" strokeWidth={2.5} />
 													<p className="text-sm md:text-base font-black text-black/70">DAYS STAKED</p>
 												</div>
@@ -1115,7 +1517,7 @@ function ActViewer({
 												transition={{ delay: 0.7 }}
 												className="bg-[#6BCF7F] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
 											>
-												<div className="flex items-center gap-2 mb-2">
+												<div className="flex gap-2 mb-2">
 													<Activity className="w-5 h-5 text-black" strokeWidth={2.5} />
 													<p className="text-sm md:text-base font-black text-black/70">TRANSACTIONS</p>
 												</div>
@@ -1131,7 +1533,7 @@ function ActViewer({
 												transition={{ delay: 0.8 }}
 												className="bg-[#C77DFF] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
 											>
-												<div className="flex items-center gap-2 mb-2">
+												<div className="flex gap-2 mb-2">
 													<Zap className="w-5 h-5 text-black" strokeWidth={2.5} fill="black" />
 													<p className="text-sm md:text-base font-black text-black/70">GAS SAVED</p>
 												</div>
@@ -1143,7 +1545,7 @@ function ActViewer({
 												transition={{ delay: 0.9 }}
 												className="bg-[#4CC9F0] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
 											>
-												<div className="flex items-center gap-2 mb-2">
+												<div className="flex gap-2 mb-2">
 													<Target className="w-5 h-5 text-black" strokeWidth={2.5} />
 													<p className="text-sm md:text-base font-black text-black/70">PROTOCOLS</p>
 												</div>
@@ -1336,7 +1738,7 @@ function ActViewer({
 												transition={{ delay: 0.6 }}
 												className="bg-[#FFD93D] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
 											>
-												<div className="flex items-center gap-2 mb-2">
+												<div className="flex gap-2 mb-2">
 													<Calendar className="w-5 h-5 text-black" strokeWidth={2.5} />
 													<p className="text-sm md:text-base font-black text-black/70">DAYS STAKED</p>
 												</div>
@@ -1348,7 +1750,7 @@ function ActViewer({
 												transition={{ delay: 0.7 }}
 												className="bg-[#6BCF7F] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
 											>
-												<div className="flex items-center gap-2 mb-2">
+												<div className="flex gap-2 mb-2">
 													<Activity className="w-5 h-5 text-black" strokeWidth={2.5} />
 													<p className="text-sm md:text-base font-black text-black/70">DEFI RANK</p>
 												</div>
@@ -1364,7 +1766,7 @@ function ActViewer({
 												transition={{ delay: 0.8 }}
 												className="bg-[#C77DFF] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
 											>
-												<div className="flex items-center gap-2 mb-2">
+												<div className="flex gap-2 mb-2">
 													<Zap className="w-5 h-5 text-black" strokeWidth={2.5} fill="black" />
 													{/* <p className="text-sm md:text-base font-black text-black/70">GAS SAVED</p> */}
 												</div>
@@ -1376,7 +1778,7 @@ function ActViewer({
 												transition={{ delay: 0.9 }}
 												className="bg-[#4CC9F0] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
 											>
-												<div className="flex items-center gap-2 mb-2">
+												<div className="flex gap-2 mb-2">
 													<Target className="w-5 h-5 text-black" strokeWidth={2.5} />
 													{/* <p className="text-sm md:text-base font-black text-black/70">PROTOCOLS</p> */}
 												</div>
@@ -1529,7 +1931,7 @@ function ActViewer({
                       transition={{ delay: 0.6 }}
                       className="bg-[#FFD93D] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                     >
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex gap-2 mb-2">
                         <Coins className="w-5 h-5 text-black" />
                         <p className="text-sm md:text-base font-black text-black/70">STRK STAKED</p>
                       </div>
@@ -1541,7 +1943,7 @@ function ActViewer({
                       transition={{ delay: 0.7 }}
                       className="bg-[#6BCF7F] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                     >
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex gap-2 mb-2">
                         <Bitcoin className="w-5 h-5 text-black" />
                         <p className="text-sm md:text-base font-black text-black/70">BTC STAKED</p>
                       </div>
@@ -1557,7 +1959,7 @@ function ActViewer({
                       transition={{ delay: 0.8 }}
                       className="bg-[#C77DFF] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                     >
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex gap-2 mb-2">
                         <Shield className="w-5 h-5 text-black" />
                         <p className="text-sm md:text-base font-black text-black/70">VALIDATORS</p>
                       </div>
@@ -1569,7 +1971,7 @@ function ActViewer({
                       transition={{ delay: 0.9 }}
                       className="bg-[#4CC9F0] border-4 border-black rounded-2xl p-4 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
                     >
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex gap-2 mb-2">
                         <Trophy className="w-5 h-5 text-black" />
                         <p className="text-sm md:text-base font-black text-black/70">REWARDS</p>
                       </div>
