@@ -768,7 +768,7 @@ function GridViewScreen({
     toast.info('Tip: Attach the downloaded image when posting on X!');
   };
 
-  const getTileStyle = (state: TileState, index: number) => {
+  const getTileStyle = (_state: TileState, index: number) => {
     const baseColor = isTurquoiseMode 
       ? turquoiseColors[index % turquoiseColors.length]
       : cardColors[index % cardColors.length];
