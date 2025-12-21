@@ -61,16 +61,18 @@ import {
 import { toast, Toaster } from 'sonner';
 import {
   PersonalityType,
+  Chain,
   type ResolutionItem,
   getItemsByTypes,
   getRandomItemsForGrid,
+  getChainItems,
 } from '../data/resolutions';
 import { Button } from './components/ui/button';
 import { Tooltip, TooltipTrigger, TooltipContent } from './components/ui/tooltip';
 import { handleTwitterSignIn, handleSignOut } from '../actions/auth';
 
 // Title suggestion: "Crypto Resolutions 2025 → 2026"
-const APP_TITLE = 'Crypto Resolutions 2025 → 2026';
+const APP_TITLE = 'Crypto Bingo Card 2025 → 2026';
 
 type TileState = 'completed-2025' | 'planned-2026' | 'none';
 
@@ -413,12 +415,19 @@ function PersonalitySelectionScreen({
   isTurquoiseMode,
   toggleTurquoiseMode,
 }: {
-  onComplete: (types: PersonalityType[]) => void;
+  onComplete: (types: PersonalityType[], chains: Chain[]) => void;
   session: any;
   isTurquoiseMode: boolean;
   toggleTurquoiseMode: () => void;
 }) {
   const [selectedTypes, setSelectedTypes] = useState<PersonalityType[]>([]);
+  const [selectedChains, setSelectedChains] = useState<Chain[]>([]);
+  
+  // Shuffle chains each time component mounts
+  const [shuffledChains] = useState<Chain[]>(() => {
+    const chains: Chain[] = ['Starknet', 'Ethereum', 'Bitcoin', 'Base', 'Solana'];
+    return chains.sort(() => 0.5 - Math.random());
+  });
 
   const personalityTypes: PersonalityType[] = [
     'Developer',
@@ -438,12 +447,20 @@ function PersonalitySelectionScreen({
     );
   };
 
+  const toggleChain = (chain: Chain) => {
+    setSelectedChains((prev) =>
+      prev.includes(chain)
+        ? prev.filter((c) => c !== chain)
+        : [...prev, chain]
+    );
+  };
+
   const handleContinue = () => {
     if (selectedTypes.length === 0) {
       toast.error('Please select at least one personality type');
       return;
     }
-    onComplete(selectedTypes);
+    onComplete(selectedTypes, selectedChains);
   };
 
   const bgColor = isTurquoiseMode ? '#00FFEF' : '#014a42';
@@ -488,7 +505,7 @@ function PersonalitySelectionScreen({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl font-bold mb-12"
+            className="text-xl md:text-2xl font-bold mb-8"
             style={{
               color: isTurquoiseMode ? '#000000' : '#ffffff',
             }}
@@ -497,7 +514,7 @@ function PersonalitySelectionScreen({
           </motion.p>
 
           {/* Personality Type Selection */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {personalityTypes.map((type) => {
               const isSelected = selectedTypes.includes(type);
               return (
@@ -525,6 +542,51 @@ function PersonalitySelectionScreen({
               );
             })}
           </div>
+
+          {/* Chain Selection (Optional) */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="mb-8"
+          >
+            <motion.p
+              className="text-lg md:text-xl font-bold mb-4"
+              style={{
+                color: isTurquoiseMode ? '#000000' : '#ffffff',
+              }}
+            >
+              Select chains (optional) - personalizes some resolutions
+            </motion.p>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
+              {shuffledChains.map((chain) => {
+                const isSelected = selectedChains.includes(chain);
+                return (
+                  <motion.button
+                    key={chain}
+                    onClick={() => toggleChain(chain)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`p-4 border-4 border-black rounded-xl font-black text-sm md:text-base transition-all ${
+                      isSelected
+                        ? 'bg-[#00DE71] text-black'
+                        : 'bg-white text-black hover:bg-gray-100'
+                    }`}
+                    style={{
+                      boxShadow: isSelected
+                        ? '6px 6px 0px 0px rgba(0,0,0,0.3)'
+                        : '3px 3px 0px 0px rgba(0,0,0,0.3)',
+                    }}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span>{chain}</span>
+                      {isSelected && <Check className="w-4 h-4 md:w-5 md:h-5" />}
+                    </div>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </motion.div>
 
           {/* Continue Button */}
           <motion.button
@@ -597,12 +659,14 @@ function PersonalitySelectionScreen({
 
 function GridViewScreen({
   personalityTypes,
+  chains,
   session,
   onBack,
   isTurquoiseMode,
   toggleTurquoiseMode,
 }: {
   personalityTypes: PersonalityType[];
+  chains: Chain[];
   session: any;
   onBack: () => void;
   isTurquoiseMode: boolean;
@@ -615,16 +679,28 @@ function GridViewScreen({
 
   const generateNewGrid = useCallback(() => {
     setIsGenerating(true);
-    const items = getItemsByTypes(personalityTypes);
+    const personalityItems = getItemsByTypes(personalityTypes);
+    const chainSpecificItems = chains.length > 0 ? getChainItems(chains) : [];
     
-    // Get 23 random items (24 total - 1 for Endur card)
-    const randomItems = getRandomItemsForGrid(items, 23);
+    // Calculate how many chain-specific items to include (30-50% of 15 = 5-7 items)
+    const chainItemCount = chains.length > 0 
+      ? Math.floor(Math.random() * 3) + 5 // Random between 5-7
+      : 0;
+    
+    // Get chain-specific items
+    const selectedChainItems = chainSpecificItems.length > 0
+      ? getRandomItemsForGrid(chainSpecificItems, chainItemCount)
+      : [];
+    
+    // Get remaining items from personality types (15 - chain items - 1 Endur = 14 - chain items)
+    const remainingCount = 15 - selectedChainItems.length - 1; // -1 for Endur card
+    const personalitySelectedItems = getRandomItemsForGrid(personalityItems, remainingCount);
     
     // Randomly choose one Endur staking item
     const endurItem = ENDUR_STAKING_ITEMS[Math.floor(Math.random() * ENDUR_STAKING_ITEMS.length)];
     
     // Combine all items
-    const allItems = [...randomItems, endurItem];
+    const allItems = [...personalitySelectedItems, ...selectedChainItems, endurItem];
     
     // Create grid tiles with random stamp positions
     const tiles: GridTile[] = allItems.map((item) => {
@@ -637,7 +713,7 @@ function GridViewScreen({
       };
     });
     
-    // Shuffle tiles, but give higher probability to Endur card in first 2 rows (positions 0-11)
+    // Shuffle tiles, but give higher probability to Endur card in first 2 rows (positions 0-9 in 5x3 grid)
     const shuffledTiles = [...tiles];
     const endurTileIndex = shuffledTiles.findIndex(t => isEndurStakingItem(t.item));
     
@@ -645,15 +721,15 @@ function GridViewScreen({
       // Remove Endur tile from its current position
       const [endurTile] = shuffledTiles.splice(endurTileIndex, 1);
       
-      // Higher probability for first 2 rows (positions 0-11 in 6x4 grid)
-      // 70% chance in first 2 rows, 30% chance in last 2 rows
+      // Higher probability for first 2 rows (positions 0-9 in 5x3 grid)
+      // 70% chance in first 2 rows, 30% chance in last row
       let targetPosition: number;
       if (Math.random() < 0.7) {
-        // First 2 rows: positions 0-11
-        targetPosition = Math.floor(Math.random() * 12);
+        // First 2 rows: positions 0-9
+        targetPosition = Math.floor(Math.random() * 10);
       } else {
-        // Last 2 rows: positions 12-23
-        targetPosition = 12 + Math.floor(Math.random() * 12);
+        // Last row: positions 10-14
+        targetPosition = 10 + Math.floor(Math.random() * 5);
       }
       
       // Insert Endur tile at target position
@@ -662,7 +738,7 @@ function GridViewScreen({
     
     setGrid(shuffledTiles);
     setIsGenerating(false);
-  }, [personalityTypes]);
+  }, [personalityTypes, chains]);
 
   // Initialize grid
   useEffect(() => {
@@ -686,18 +762,29 @@ function GridViewScreen({
       return;
     }
     
+    // Check if current tile is chain-specific
+    const isChainItem = currentTile.item.chain !== undefined;
+    
     // Regular refresh for other tiles
-    const items = getItemsByTypes(personalityTypes);
+    const personalityItems = getItemsByTypes(personalityTypes);
+    const chainItems = chains.length > 0 ? getChainItems(chains) : [];
+    const allAvailableItems = isChainItem ? chainItems : personalityItems;
+    
     // Exclude Endur items and current grid items
     const currentItemIds = grid.map((t) => t.item.id);
     const endurItemIds = ENDUR_STAKING_ITEMS.map(item => item.id);
-    const availableItems = items.filter(item => 
-      !currentItemIds.includes(item.id) && !endurItemIds.includes(item.id)
+    const availableItems = allAvailableItems.filter(item => 
+      !currentItemIds.includes(item.id) && 
+      !endurItemIds.includes(item.id) &&
+      (isChainItem ? item.chain !== undefined : item.chain === undefined)
     );
     
     if (availableItems.length === 0) {
-      // Fallback: use any item except Endur items
-      const fallbackItems = items.filter(item => !endurItemIds.includes(item.id));
+      // Fallback: use any item of same type except Endur items
+      const fallbackItems = allAvailableItems.filter(item => 
+        !endurItemIds.includes(item.id) &&
+        (isChainItem ? item.chain !== undefined : item.chain === undefined)
+      );
       const newItem = fallbackItems[Math.floor(Math.random() * fallbackItems.length)];
       if (newItem) {
         setGrid((prev) =>
@@ -875,14 +962,14 @@ function GridViewScreen({
                       fontStyle: 'italic',
                     }}
                   >
-                    My 2025-2026 Crypto Resolutions Card
+                    My 2025-2026 Crypto Bingo Card
                   </h2>
                 </div>
               </>
             )}
 
-            {/* 6x4 Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-3">
+            {/* 5x3 Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
               {grid.map((tile, index) => {
                 const style = getTileStyle(tile.state, index);
                 const IconComponent = getIconComponent(tile.item.icon);
@@ -1058,14 +1145,16 @@ function GridViewScreen({
 export default function App({ session }: { session: any }) {
   const [screen, setScreen] = useState<Screen>('personality-selection');
   const [selectedPersonalityTypes, setSelectedPersonalityTypes] = useState<PersonalityType[]>([]);
+  const [selectedChains, setSelectedChains] = useState<Chain[]>([]);
   const [isTurquoiseMode, setIsTurquoiseMode] = useState(false);
 
   const toggleTurquoiseMode = () => {
     setIsTurquoiseMode((prev) => !prev);
   };
 
-  const handlePersonalityComplete = (types: PersonalityType[]) => {
+  const handlePersonalityComplete = (types: PersonalityType[], chains: Chain[]) => {
     setSelectedPersonalityTypes(types);
+    setSelectedChains(chains);
     setScreen('grid-view');
   };
 
@@ -1102,6 +1191,7 @@ export default function App({ session }: { session: any }) {
           >
             <GridViewScreen
               personalityTypes={selectedPersonalityTypes}
+              chains={selectedChains}
               session={session}
               onBack={handleBack}
               isTurquoiseMode={isTurquoiseMode}

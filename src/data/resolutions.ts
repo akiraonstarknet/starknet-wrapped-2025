@@ -10,12 +10,20 @@ export type PersonalityType =
   | 'Farmer'
   | 'Other User';
 
+export type Chain = 
+  | 'Starknet'
+  | 'Ethereum'
+  | 'Bitcoin'
+  | 'Base'
+  | 'Solana';
+
 export interface ResolutionItem {
   id: string;
   text: string;
   icon: string; // lucide-react icon name or emoji
   category: PersonalityType;
   intensity: 'crazy' | 'wild' | 'moderate' | 'actionable'; // intensity level
+  chain?: Chain; // Optional chain-specific item
 }
 
 // Developer resolutions
@@ -242,6 +250,96 @@ const otherUserItems: ResolutionItem[] = [
   { id: 'other-28', text: 'Teach someone else about crypto', category: 'Other User', intensity: 'actionable', icon: '👨‍🏫' },
 ];
 
+// Chain-specific resolutions
+const starknetItems: ResolutionItem[] = [
+  { id: 'starknet-1', text: 'Create a Starknet wallet', category: 'Other User', intensity: 'actionable', icon: '👛', chain: 'Starknet' },
+  { id: 'starknet-2', text: 'Lend on Vesu', category: 'DeFi User', intensity: 'actionable', icon: '🏦', chain: 'Starknet' },
+  { id: 'starknet-3', text: 'Borrow on Vesu', category: 'DeFi User', intensity: 'actionable', icon: '💵', chain: 'Starknet' },
+  { id: 'starknet-4', text: 'Stake STRK on Endur.fi', category: 'DeFi User', intensity: 'actionable', icon: '💰', chain: 'Starknet' },
+  { id: 'starknet-6', text: 'Deploy a Cairo smart contract', category: 'Developer', intensity: 'actionable', icon: '📝', chain: 'Starknet' },
+  { id: 'starknet-7', text: 'Trade on Ekubo', category: 'DeFi User', intensity: 'actionable', icon: '💱', chain: 'Starknet' },
+  { id: 'starknet-8', text: 'Bridge to Starknet via StarkGate', category: 'DeFi User', intensity: 'actionable', icon: '🌉', chain: 'Starknet' },
+  { id: 'starknet-9', text: 'Mint an NFT on Starknet', category: 'Other User', intensity: 'actionable', icon: '🖼️', chain: 'Starknet' },
+  { id: 'starknet-10', text: 'Build a dApp on Starknet', category: 'Developer', intensity: 'actionable', icon: '💻', chain: 'Starknet' },
+  { id: 'starknet-12', text: 'Farm yield on Troves.fi', category: 'Farmer', intensity: 'actionable', icon: '🌾', chain: 'Starknet' },
+  { id: 'starknet-13', text: 'Ape into a Starknet memecoin', category: 'Other User', intensity: 'wild', icon: '🦍', chain: 'Starknet' },
+  { id: 'starknet-14', text: 'Trade PERPs on Extended', category: 'DeFi User', intensity: 'actionable', icon: '💱', chain: 'Starknet' },
+  { id: 'starknet-15', text: 'Trade PERPs on Paradex', category: 'DeFi User', intensity: 'actionable', icon: '💱', chain: 'Starknet' },
+  { id: 'starknet-16', text: 'Rug pull a meme coin on Starknet (just kidding)', category: 'Developer', intensity: 'crazy', icon: '💣', chain: 'Starknet' },
+];
+
+const ethereumItems: ResolutionItem[] = [
+  { id: 'ethereum-1', text: 'Create an Ethereum wallet', category: 'Other User', intensity: 'actionable', icon: '👛', chain: 'Ethereum' },
+  { id: 'ethereum-2', text: 'Lend on Aave', category: 'DeFi User', intensity: 'actionable', icon: '🏦', chain: 'Ethereum' },
+  { id: 'ethereum-3', text: 'Borrow on Aave', category: 'DeFi User', intensity: 'actionable', icon: '💵', chain: 'Ethereum' },
+  { id: 'ethereum-4', text: 'Stake ETH on Lido', category: 'DeFi User', intensity: 'actionable', icon: '💰', chain: 'Ethereum' },
+  { id: 'ethereum-5', text: 'Liquid stake ETH', category: 'DeFi User', intensity: 'actionable', icon: '💧', chain: 'Ethereum' },
+  { id: 'ethereum-6', text: 'Deploy a Solidity smart contract', category: 'Developer', intensity: 'actionable', icon: '📝', chain: 'Ethereum' },
+  { id: 'ethereum-7', text: 'Trade on Uniswap', category: 'DeFi User', intensity: 'actionable', icon: '💱', chain: 'Ethereum' },
+  { id: 'ethereum-8', text: 'Bridge to Ethereum', category: 'DeFi User', intensity: 'actionable', icon: '🌉', chain: 'Ethereum' },
+  { id: 'ethereum-9', text: 'Mint an NFT on Ethereum', category: 'Other User', intensity: 'actionable', icon: '🖼️', chain: 'Ethereum' },
+  { id: 'ethereum-10', text: 'Build a dApp on Ethereum', category: 'Developer', intensity: 'actionable', icon: '💻', chain: 'Ethereum' },
+  { id: 'ethereum-11', text: 'Use MetaMask for the first time', category: 'Other User', intensity: 'actionable', icon: '🦊', chain: 'Ethereum' },
+  { id: 'ethereum-12', text: 'Farm yield on Compound', category: 'Farmer', intensity: 'actionable', icon: '🌾', chain: 'Ethereum' },
+  { id: 'ethereum-13', text: 'Ape into an Ethereum memecoin', category: 'Other User', intensity: 'wild', icon: '🦍', chain: 'Ethereum' },
+  { id: 'ethereum-14', text: 'Create an ERC-20 token', category: 'Founder', intensity: 'actionable', icon: '🪙', chain: 'Ethereum' },
+  { id: 'ethereum-15', text: 'Pay $100+ in gas fees', category: 'DeFi User', intensity: 'wild', icon: '⛽', chain: 'Ethereum' },
+];
+
+const bitcoinItems: ResolutionItem[] = [
+  { id: 'bitcoin-1', text: 'Create a Bitcoin wallet', category: 'Other User', intensity: 'actionable', icon: '👛', chain: 'Bitcoin' },
+  { id: 'bitcoin-2', text: 'Stake BTC on Endur', category: 'DeFi User', intensity: 'actionable', icon: '💰', chain: 'Bitcoin' },
+  { id: 'bitcoin-3', text: 'Liquid stake BTC', category: 'DeFi User', intensity: 'actionable', icon: '💧', chain: 'Bitcoin' },
+  { id: 'bitcoin-4', text: 'Buy your first Bitcoin', category: 'Other User', intensity: 'actionable', icon: '₿', chain: 'Bitcoin' },
+  { id: 'bitcoin-5', text: 'Run a Bitcoin node', category: 'Developer', intensity: 'actionable', icon: '🖥️', chain: 'Bitcoin' },
+  { id: 'bitcoin-6', text: 'Mine Bitcoin (or try)', category: 'Developer', intensity: 'wild', icon: '⛏️', chain: 'Bitcoin' },
+  { id: 'bitcoin-7', text: 'Use Lightning Network', category: 'DeFi User', intensity: 'actionable', icon: '⚡', chain: 'Bitcoin' },
+  { id: 'bitcoin-8', text: 'Bridge BTC to Ethereum', category: 'DeFi User', intensity: 'actionable', icon: '🌉', chain: 'Bitcoin' },
+  { id: 'bitcoin-9', text: 'Inscribe an Ordinal', category: 'Other User', intensity: 'wild', icon: '📝', chain: 'Bitcoin' },
+  { id: 'bitcoin-10', text: 'Trade Bitcoin on a DEX', category: 'DeFi User', intensity: 'actionable', icon: '💱', chain: 'Bitcoin' },
+  { id: 'bitcoin-11', text: 'HODL Bitcoin for 1 year', category: 'Other User', intensity: 'actionable', icon: '💎', chain: 'Bitcoin' },
+  { id: 'bitcoin-12', text: 'Use a hardware wallet for BTC', category: 'Other User', intensity: 'actionable', icon: '🔐', chain: 'Bitcoin' },
+  { id: 'bitcoin-13', text: 'Ape into a Bitcoin memecoin', category: 'Other User', intensity: 'wild', icon: '🦍', chain: 'Bitcoin' },
+  { id: 'bitcoin-14', text: 'Create a Bitcoin L2', category: 'Founder', intensity: 'wild', icon: '🌐', chain: 'Bitcoin' },
+  { id: 'bitcoin-15', text: 'Spend 1 BTC on pizza (again)', category: 'Other User', intensity: 'crazy', icon: '🍕', chain: 'Bitcoin' },
+];
+
+const baseItems: ResolutionItem[] = [
+  { id: 'base-1', text: 'Create a Base wallet', category: 'Other User', intensity: 'actionable', icon: '👛', chain: 'Base' },
+  { id: 'base-2', text: 'Lend on Aave Base', category: 'DeFi User', intensity: 'actionable', icon: '🏦', chain: 'Base' },
+  { id: 'base-3', text: 'Borrow on Aave Base', category: 'DeFi User', intensity: 'actionable', icon: '💵', chain: 'Base' },
+  { id: 'base-4', text: 'Bridge to Base', category: 'DeFi User', intensity: 'actionable', icon: '🌉', chain: 'Base' },
+  { id: 'base-5', text: 'Trade on Uniswap Base', category: 'DeFi User', intensity: 'actionable', icon: '💱', chain: 'Base' },
+  { id: 'base-6', text: 'Deploy a contract on Base', category: 'Developer', intensity: 'actionable', icon: '📝', chain: 'Base' },
+  { id: 'base-7', text: 'Mint an NFT on Base', category: 'Other User', intensity: 'actionable', icon: '🖼️', chain: 'Base' },
+  { id: 'base-8', text: 'Farm yield on Base', category: 'Farmer', intensity: 'actionable', icon: '🌾', chain: 'Base' },
+  { id: 'base-9', text: 'Build a dApp on Base', category: 'Developer', intensity: 'actionable', icon: '💻', chain: 'Base' },
+  { id: 'base-10', text: 'Use Base for the first time', category: 'Other User', intensity: 'actionable', icon: '🆕', chain: 'Base' },
+  { id: 'base-11', text: 'Ape into a Base memecoin', category: 'Other User', intensity: 'wild', icon: '🦍', chain: 'Base' },
+  { id: 'base-12', text: 'Create a Base L3', category: 'Founder', intensity: 'wild', icon: '🌐', chain: 'Base' },
+  { id: 'base-13', text: 'Get Base airdrop (if eligible)', category: 'Other User', intensity: 'actionable', icon: '🎁', chain: 'Base' },
+  { id: 'base-14', text: 'Use Coinbase Wallet on Base', category: 'Other User', intensity: 'actionable', icon: '🔐', chain: 'Base' },
+  { id: 'base-15', text: 'Rug pull on Base (just kidding)', category: 'Developer', intensity: 'crazy', icon: '💣', chain: 'Base' },
+];
+
+const solanaItems: ResolutionItem[] = [
+  { id: 'solana-1', text: 'Create a Solana wallet (Phantom)', category: 'Other User', intensity: 'actionable', icon: '👛', chain: 'Solana' },
+  { id: 'solana-2', text: 'Lend on Solend', category: 'DeFi User', intensity: 'actionable', icon: '🏦', chain: 'Solana' },
+  { id: 'solana-3', text: 'Borrow on Solend', category: 'DeFi User', intensity: 'actionable', icon: '💵', chain: 'Solana' },
+  { id: 'solana-4', text: 'Stake SOL', category: 'DeFi User', intensity: 'actionable', icon: '💰', chain: 'Solana' },
+  { id: 'solana-5', text: 'Liquid stake SOL', category: 'DeFi User', intensity: 'actionable', icon: '💧', chain: 'Solana' },
+  { id: 'solana-6', text: 'Deploy a Solana program', category: 'Developer', intensity: 'actionable', icon: '📝', chain: 'Solana' },
+  { id: 'solana-7', text: 'Trade on Jupiter', category: 'DeFi User', intensity: 'actionable', icon: '💱', chain: 'Solana' },
+  { id: 'solana-8', text: 'Bridge to Solana', category: 'DeFi User', intensity: 'actionable', icon: '🌉', chain: 'Solana' },
+  { id: 'solana-9', text: 'Mint an NFT on Solana', category: 'Other User', intensity: 'actionable', icon: '🖼️', chain: 'Solana' },
+  { id: 'solana-10', text: 'Build a dApp on Solana', category: 'Developer', intensity: 'actionable', icon: '💻', chain: 'Solana' },
+  { id: 'solana-11', text: 'Farm yield on Raydium', category: 'Farmer', intensity: 'actionable', icon: '🌾', chain: 'Solana' },
+  { id: 'solana-12', text: 'Ape into a Solana memecoin', category: 'Other User', intensity: 'wild', icon: '🦍', chain: 'Solana' },
+  { id: 'solana-13', text: 'Create a Solana token', category: 'Founder', intensity: 'actionable', icon: '🪙', chain: 'Solana' },
+  { id: 'solana-14', text: 'Use Solana for the first time', category: 'Other User', intensity: 'actionable', icon: '🆕', chain: 'Solana' },
+  { id: 'solana-15', text: 'Pay $0.0001 in fees (feels good)', category: 'DeFi User', intensity: 'moderate', icon: '⛽', chain: 'Solana' },
+];
+
 // Combine all items
 export const allResolutionItems: ResolutionItem[] = [
   ...developerItems,
@@ -253,6 +351,21 @@ export const allResolutionItems: ResolutionItem[] = [
   ...otherUserItems,
 ];
 
+// Chain-specific items
+export const chainItems: ResolutionItem[] = [
+  ...starknetItems,
+  ...ethereumItems,
+  ...bitcoinItems,
+  ...baseItems,
+  ...solanaItems,
+];
+
+// Get chain-specific items
+export function getChainItems(chains: Chain[]): ResolutionItem[] {
+  if (chains.length === 0) return [];
+  return chainItems.filter(item => item.chain && chains.includes(item.chain));
+}
+
 // Get items by personality types
 export function getItemsByTypes(types: PersonalityType[]): ResolutionItem[] {
   if (types.length === 0) return [];
@@ -260,7 +373,7 @@ export function getItemsByTypes(types: PersonalityType[]): ResolutionItem[] {
 }
 
 // Get random items for grid
-export function getRandomItemsForGrid(items: ResolutionItem[], count: number = 24): ResolutionItem[] {
+export function getRandomItemsForGrid(items: ResolutionItem[], count: number = 15): ResolutionItem[] {
   const shuffled = [...items].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
