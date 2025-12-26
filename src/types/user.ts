@@ -60,6 +60,29 @@ export interface UserWrappedData {
     defiProtocols: string[];
     defiTotalValue: number;
     badges: Badge[];
+    // New fields for ACT 1 cards
+    daysStrkStaked?: number;
+    firstStrkStakedDate?: string;
+    strkEra?: 'og' | 'early' | 'mainnet' | 'none';
+    firstStakeDaysSinceLaunch: number;
+    daysBtcStaked?: number;
+    firstBtcStakedDate?: string;
+    btcEra?: '7d' | '7d+' | 'none';
+    firstStakeDaysSinceBtcLaunch: number;
+    // Liquidity fields
+    avgLiquidityInTrovesLpUsdTotal: number;
+    avgLiquidityInEkuboLpUsdTotal: number;
+    daysNonZeroLiquidityInTrovesLp: number;
+    daysNonZeroLiquidityInEkuboLp: number;
+    // Leverage fields
+    avgXstrkInTrovesHyperOrSensei: number;
+    avgXbtcInTrovesHyper: number;
+    // Vesu fields
+    avgXstrkInVesu: number;
+    avgXbtcInVesu: number;
+    avgBorrowedInVesu: number;
+    // Diamond hands
+    days100XstrkHeldThroughLows: number;
   };
   act3: {
     totalStakedSTRK: number;

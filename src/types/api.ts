@@ -11,15 +11,29 @@ export interface Season1RankInfo {
 }
 
 export interface WrappedDataResponse {
-  stakingStats: StakingStats;
-  hasBtcStake: boolean;
-  hadStakeBeforeMay26: boolean;
-  hasMinStakingDuration: boolean;
-  stakingDurationDays: number;
-  heldXstrkDuringLowPrice: boolean;
+  maxStrkStaked: string;
+  minStrkStaked: string;
+  maxBtcStaked: string;
+  minBtcStaked: string;
+  avgLiquidityInTrovesLpUsdTotal: string;
+  avgLiquidityInTrovesLpUsdStrk: string;
+  avgLiquidityInTrovesLpUsdBtc: string;
+  daysNonZeroLiquidityInTrovesLp: number;
+  avgLiquidityInEkuboLpUsdTotal: string;
+  avgLiquidityInEkuboLpUsdStrk: string;
+  avgLiquidityInEkuboLpUsdBtc: string;
+  daysNonZeroLiquidityInEkuboLp: number;
+  days100XstrkHeldThroughLows: number;
+  avgXstrkInTrovesHyperOrSensei: string;
+  avgXbtcInTrovesHyper: string;
+  avgXstrkInVesu: string;
+  avgXbtcInVesu: string;
+  avgBorrowedInVesu: string;
+  daysStrkStaked?: number;
+  firstStrkStakedDate?: string;
+  daysBtcStaked?: number;
+  firstBtcStakedDate?: string;
   season1Rank?: Season1RankInfo;
-  hasQualifyingLpPosition: boolean;
-  defiProtocols: string[];
 }
 
 export interface JourneyDataResponse {

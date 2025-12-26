@@ -5,3 +5,22 @@
 @tailwind utilities;
 
 @import './theme.css';
+
+/* Global background color for scroll areas */
+body {
+  background-color: #00de71;
+}
+
+/* Running banner animation */
+@keyframes banner-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.banner-scroll {
+  animation: banner-scroll 30s linear infinite;
+}

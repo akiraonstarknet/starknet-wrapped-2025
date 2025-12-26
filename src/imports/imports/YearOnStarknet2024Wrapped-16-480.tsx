@@ -518,7 +518,7 @@ function DefiBackgroundIllustrations2() {
 function Container19() {
   return (
     <div className="h-[28px] relative shrink-0 w-full" data-name="Container">
-      <p className="absolute font-['Inter:Black_Italic',sans-serif] font-black italic leading-[28px] left-0 text-[#00ffef] text-[18px] top-0 tracking-[-0.4395px] w-[3258px]">🚀 WELCOME TO ENDUR WRAPPED 2025 • 💎 CHECK YOUR STATS • 🔥 SHARE WITH FRENS • 🚀 WELCOME TO ENDUR WRAPPED 2025 • 💎 CHECK YOUR STATS • 🔥 SHARE WITH FRENS • 🚀 WELCOME TO ENDUR WRAPPED 2025 • 💎 CHECK YOUR STATS • 🔥 SHARE WITH FRENS</p>
+      <p className="absolute font-['Inter:Black_Italic',sans-serif] font-black italic leading-[28px] left-0 text-[#00ffef] text-[18px] top-0 tracking-[-0.4395px] w-[3258px]">🚀 WELCOME TO STARKNET WRAPPED 2025 • 💎 CHECK YOUR STATS • 🔥 SHARE WITH FRENS • ⚡ POWERED BY ENDUR.FI 🚀 WELCOME TO STARKNET WRAPPED 2025 • 💎 CHECK YOUR STATS • 🔥 SHARE WITH FRENS • ⚡ POWERED BY ENDUR.FI 🚀 WELCOME TO STARKNET WRAPPED 2025 • 💎 CHECK YOUR STATS • 🔥 SHARE WITH FRENS • ⚡ POWERED BY ENDUR.FI</p>
     </div>
   );
 }

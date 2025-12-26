@@ -9,21 +9,32 @@ const client = new GraphQLClient(GRAPHQL_ENDPOINT);
 const GET_WRAPPED_DATA_QUERY = `
   query GetWrappedData($userAddresses: [String!]!) {
     getWrappedData(userAddresses: $userAddresses) {
-      stakingStats {
-        maxStrkStaked
-        minStrkStaked
-      }
-      hasBtcStake
-      hadStakeBeforeMay26
-      hasMinStakingDuration
-      stakingDurationDays
-      heldXstrkDuringLowPrice
+      maxStrkStaked
+      minStrkStaked
+      maxBtcStaked
+      minBtcStaked
+      avgLiquidityInTrovesLpUsdTotal
+      avgLiquidityInTrovesLpUsdStrk
+      avgLiquidityInTrovesLpUsdBtc
+      daysNonZeroLiquidityInTrovesLp
+      avgLiquidityInEkuboLpUsdTotal
+      avgLiquidityInEkuboLpUsdStrk
+      avgLiquidityInEkuboLpUsdBtc
+      daysNonZeroLiquidityInEkuboLp
+      days100XstrkHeldThroughLows
+      avgXstrkInTrovesHyperOrSensei
+      avgXbtcInTrovesHyper
+      avgXstrkInVesu
+      avgXbtcInVesu
+      avgBorrowedInVesu
+      daysStrkStaked
+      firstStrkStakedDate
+      daysBtcStaked
+      firstBtcStakedDate
       season1Rank {
         rank
         weightedPoints
       }
-      hasQualifyingLpPosition
-      defiProtocols
     }
   }
 `;
