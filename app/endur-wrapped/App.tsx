@@ -13,7 +13,6 @@ import {
   Droplet,
   Bitcoin,
   Sparkles,
-  Lock,
   ArrowLeft,
   ArrowRight,
   Share2,
@@ -35,7 +34,6 @@ import {
   Gem,
   Plus,
   Trash2,
-  ExternalLink,
   Clock,
   TrendingUp,
 } from 'lucide-react';
@@ -161,9 +159,11 @@ const mockUserData: UserWrappedData = {
     // New fields for ACT 1 cards
     daysStrkStaked: 234,
     firstStrkStakedDate: '2024-12-01T00:00:00Z',
+    firstStakeDaysSinceLaunch: 5,
     strkEra: 'early' as const,
     daysBtcStaked: 45,
     firstBtcStakedDate: '2025-10-05T00:00:00Z',
+    firstStakeDaysSinceBtcLaunch: 3,
     btcEra: '7d' as const,
     // Liquidity fields
     avgLiquidityInTrovesLpUsdTotal: 5000,
@@ -253,7 +253,6 @@ function Ticker({ isTurquoiseMode }: { isTurquoiseMode?: boolean }) {
     </div>
   );
 }
-
 
 // Loading Screen
 function LoadingScreen({ isTurquoiseMode }: { isTurquoiseMode: boolean }) {
@@ -465,7 +464,6 @@ function LandingScreen({
             <br />
             WRAPPED 2025
           </motion.h1>
-
 
           {/* Subtitle */}
           {/* <motion.p
@@ -1059,125 +1057,126 @@ function LandingScreen({
   );
 }
 
-function Dashboard({
-  acts,
-  onSelectAct,
-  userData,
-  isTurquoiseMode,
-  toggleTurquoiseMode,
-}: {
-  acts: Act[];
-  onSelectAct: (actId: number) => void;
-  userData: UserWrappedData;
-  isTurquoiseMode: boolean;
-  toggleTurquoiseMode: () => void;
-}) {
-  return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: isTurquoiseMode ? '#008080' : '#014a42' }}>
-      <AnimatedDefiBackground />
-      <Ticker isTurquoiseMode={isTurquoiseMode} />
-
-      <div className="flex-1 p-6 md:p-12 relative z-10">
-        {/* Header */}
-        <motion.div
-          initial={{ y: -50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          className="text-center mb-12"
-        >
-          <h1
-            className="text-5xl md:text-7xl font-black mb-4"
-            style={{ 
-              color: isTurquoiseMode ? '#00FFEF' : '#00DE71',
-              textShadow: isTurquoiseMode 
-                ? '0 0 20px rgba(0, 255, 239, 0.6), 0 0 40px rgba(0, 255, 239, 0.4), 3px 3px 0px rgba(0,0,0,0.3)' 
-                : '3px 3px 0px rgba(0,0,0,0.3)' 
-            }}
-          >
-            YOUR WRAPPED
-          </h1>
-          <div 
-            className="inline-block border-4 border-black px-6 py-3 rounded-xl mb-6"
-            style={{ backgroundColor: isTurquoiseMode ? '#000000' : '#FFFFFF' }}
-          >
-            <p className="text-xl font-black" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#000000' }}>{userData.address}</p>
-          </div>
-          
-          {/* Mentor Toggle Button */}
-          <motion.button
-            onClick={toggleTurquoiseMode}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-6 py-3 border-4 border-black rounded-xl font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black mx-auto"
-            style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
-          >
-            <Heart className="w-5 h-5" />
-            gTurquoise
-          </motion.button>
-        </motion.div>
-
-        {/* Acts Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
-          {acts.map((act, index) => (
-            <motion.button
-              key={act.id}
-              initial={{ scale: 0, rotate: -10 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ delay: index * 0.1, type: 'spring', bounce: 0.4 }}
-              whileHover={{ scale: 1.05, rotate: 2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => act.unlocked && onSelectAct(act.id)}
-              disabled={!act.unlocked}
-              className={`relative p-8 border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${
-                act.unlocked ? '' : 'opacity-50 cursor-not-allowed'
-              }`}
-              style={{ 
-                backgroundColor: isTurquoiseMode ? '#00FFEF' : act.color 
-              }}
-            >
-              {/* Lock Icon for locked acts */}
-              {!act.unlocked && (
-                <div className="absolute top-4 right-4 bg-black/20 p-2 rounded-full">
-                  <Lock className="w-6 h-6 text-white" />
-                </div>
-              )}
-
-              {/* Icon */}
-              <div className="bg-white border-4 border-black rounded-2xl p-6 mb-6 w-fit mx-auto shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
-                <act.icon className="w-16 h-16 text-black drop-shadow-lg" strokeWidth={2.5} />
-              </div>
-
-              {/* Text */}
-              <div>
-                <h3 className="text-2xl font-black mb-2" style={{ color: '#000000' }}>
-                  {act.title}
-                </h3>
-                <p className="text-lg font-bold" style={{ color: '#000000' }}>
-                  {act.subtitle}
-                </p>
-              </div>
-
-              {/* Act number badge */}
-              <div className="absolute top-4 left-4 bg-black text-white border-4 border-black rounded-full w-12 h-12 flex items-center justify-center">
-                <span className="text-xl font-black">{act.id}</span>
-              </div>
-            </motion.button>
-          ))}
-        </div>
-
-        {/* Powered by footer */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-12 flex items-center justify-center gap-3"
-        >
-          <span className="font-black text-xs" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>POWERED BY</span>
-          <img src={endurLogo} alt="Endur.fi" className="h-12" />
-        </motion.div>
-      </div>
-    </div>
-  );
-}
+// Dashboard commented out - not currently used
+// function Dashboard({
+//   acts,
+//   onSelectAct,
+//   userData,
+//   isTurquoiseMode,
+//   toggleTurquoiseMode,
+// }: {
+//   acts: Act[];
+//   onSelectAct: (actId: number) => void;
+//   userData: UserWrappedData;
+//   isTurquoiseMode: boolean;
+//   toggleTurquoiseMode: () => void;
+// }) {
+//   return (
+//     <div className="min-h-screen flex flex-col relative overflow-hidden" style={{ backgroundColor: isTurquoiseMode ? '#008080' : '#014a42' }}>
+//       <AnimatedDefiBackground />
+//       <Ticker isTurquoiseMode={isTurquoiseMode} />
+//
+//       <div className="flex-1 p-6 md:p-12 relative z-10">
+//         {/* Header */}
+//         <motion.div
+//           initial={{ y: -50, opacity: 0 }}
+//           animate={{ y: 0, opacity: 1 }}
+//           className="text-center mb-12"
+//         >
+//           <h1
+//             className="text-5xl md:text-7xl font-black mb-4"
+//             style={{ 
+//               color: isTurquoiseMode ? '#00FFEF' : '#00DE71',
+//               textShadow: isTurquoiseMode 
+//                 ? '0 0 20px rgba(0, 255, 239, 0.6), 0 0 40px rgba(0, 255, 239, 0.4), 3px 3px 0px rgba(0,0,0,0.3)' 
+//                 : '3px 3px 0px rgba(0,0,0,0.3)' 
+//             }}
+//           >
+//             YOUR WRAPPED
+//           </h1>
+//           <div 
+//             className="inline-block border-4 border-black px-6 py-3 rounded-xl mb-6"
+//             style={{ backgroundColor: isTurquoiseMode ? '#000000' : '#FFFFFF' }}
+//           >
+//             <p className="text-xl font-black" style={{ color: isTurquoiseMode ? '#FFFFFF' : '#000000' }}>{userData.address}</p>
+//           </div>
+//           
+//           {/* Mentor Toggle Button */}
+//           <motion.button
+//             onClick={toggleTurquoiseMode}
+//             whileHover={{ scale: 1.05 }}
+//             whileTap={{ scale: 0.95 }}
+//             className="flex items-center gap-2 px-6 py-3 border-4 border-black rounded-xl font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] text-black mx-auto"
+//             style={{ backgroundColor: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}
+//           >
+//             <Heart className="w-5 h-5" />
+//             gTurquoise
+//           </motion.button>
+//         </motion.div>
+//
+//         {/* Acts Grid */}
+//         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
+//           {acts.map((act, index) => (
+//             <motion.button
+//               key={act.id}
+//               initial={{ scale: 0, rotate: -10 }}
+//               animate={{ scale: 1, rotate: 0 }}
+//               transition={{ delay: index * 0.1, type: 'spring', bounce: 0.4 }}
+//               whileHover={{ scale: 1.05, rotate: 2 }}
+//               whileTap={{ scale: 0.95 }}
+//               onClick={() => act.unlocked && onSelectAct(act.id)}
+//               disabled={!act.unlocked}
+//               className={`relative p-8 border-4 border-black rounded-3xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transition-all ${
+//                 act.unlocked ? '' : 'opacity-50 cursor-not-allowed'
+//               }`}
+//               style={{ 
+//                 backgroundColor: isTurquoiseMode ? '#00FFEF' : act.color 
+//               }}
+//             >
+//               {/* Lock Icon for locked acts */}
+//               {!act.unlocked && (
+//                 <div className="absolute top-4 right-4 bg-black/20 p-2 rounded-full">
+//                   <Lock className="w-6 h-6 text-white" />
+//                 </div>
+//               )}
+//
+//               {/* Icon */}
+//               <div className="bg-white border-4 border-black rounded-2xl p-6 mb-6 w-fit mx-auto shadow-[4px_4px_0px_0px_rgba(0,0,0,0.3)]">
+//                 <act.icon className="w-16 h-16 text-black drop-shadow-lg" strokeWidth={2.5} />
+//               </div>
+//
+//               {/* Text */}
+//               <div>
+//                 <h3 className="text-2xl font-black mb-2" style={{ color: '#000000' }}>
+//                   {act.title}
+//                 </h3>
+//                 <p className="text-lg font-bold" style={{ color: '#000000' }}>
+//                   {act.subtitle}
+//                 </p>
+//               </div>
+//
+//               {/* Act number badge */}
+//               <div className="absolute top-4 left-4 bg-black text-white border-4 border-black rounded-full w-12 h-12 flex items-center justify-center">
+//                 <span className="text-xl font-black">{act.id}</span>
+//               </div>
+//             </motion.button>
+//           ))}
+//         </div>
+//
+//         {/* Powered by footer */}
+//         <motion.div
+//           initial={{ opacity: 0 }}
+//           animate={{ opacity: 1 }}
+//           transition={{ delay: 0.8 }}
+//           className="mt-12 flex items-center justify-center gap-3"
+//         >
+//           <span className="font-black text-xs" style={{ color: isTurquoiseMode ? '#00FFEF' : '#00DE71' }}>POWERED BY</span>
+//           <img src={endurLogo} alt="Endur.fi" className="h-12" />
+//         </motion.div>
+//       </div>
+//     </div>
+//   );
+// }
 
 function ActViewer({
   act,
@@ -1277,8 +1276,6 @@ function ActViewer({
     if (!primaryTitle) {
       primaryTitle = { label: 'Come back next year', color: '#4CC9F0', icon: Gem };
     }
-
-    console.log('secondaryBadges', secondaryBadges);
     
     return { primaryTitle, secondaryBadges };
   };
@@ -1352,7 +1349,7 @@ function ActViewer({
             borderColor: '#000000',
           },
         ];
-      case 1:
+      case 1: {
         const cards: StatCard[] = [];
         
         // Card #0: How Early Were You? (STRK)
@@ -1654,6 +1651,7 @@ function ActViewer({
         });
 
         return cards;
+      }
       case 2:
         return [
           {
@@ -2270,13 +2268,14 @@ export default function App({ session }: { session: any }) {
     }
   };
 
-  const handleSelectAct = (actId: number) => {
-    const act = acts.find((a) => a.id === actId);
-    if (act) {
-      setSelectedAct(act);
-      setScreen('act');
-    }
-  };
+  // handleSelectAct commented out - not currently used (Dashboard is commented out)
+  // const handleSelectAct = (actId: number) => {
+  //   const act = acts.find((a) => a.id === actId);
+  //   if (act) {
+  //     setSelectedAct(act);
+  //     setScreen('act');
+  //   }
+  // };
 
   const handleNextAct = () => {
     if (selectedAct) {

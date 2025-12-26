@@ -12,51 +12,11 @@ import {
   Check,
   Sparkles,
   RotateCw,
-  Rocket,
-  Bomb,
-  Coins,
-  Bot,
-  TrendingUp,
-  TrendingDown,
-  Unlock,
-  Vote,
-  Zap,
-  Globe,
-  DollarSign,
-  Fuel,
   Crown,
-  FileText,
   Sprout,
-  GraduationCap,
-  FlaskConical,
-  Laptop,
   PenTool,
-  Trophy,
-  Search,
-  BarChart3,
-  Users,
-  Link,
-  Clock,
-  Lock,
-  Building2,
-  Target,
-  Newspaper,
-  Video,
-  Mic,
-  BookOpen,
-  Globe2,
-  Handshake,
   User,
-  Shield,
-  Gift,
   Megaphone,
-  Banknote,
-  CreditCard,
-  Bell,
-  ArrowRight,
-  ArrowLeft,
-  Activity,
-  Network,
   Code,
   Wallet,
   type LucideIcon,
@@ -305,78 +265,77 @@ function CompletedStamp({ position }: { position: { x: number; y: number } }) {
 }
 
 // Icon mapping - maps emoji/string to lucide-react icons
-const iconMap: Record<string, LucideIcon> = {
-  '💣': Bomb,
-  '🚀': Rocket,
-  '💸': Coins,
-  '🤖': Bot,
-  '🎰': Activity,
-  '📈': TrendingUp,
-  '🌉': Network,
-  '🔓': Unlock,
-  '🗳️': Vote,
-  '⚡': Zap,
-  '🌐': Globe,
-  '📉': TrendingDown,
-  '💱': DollarSign,
-  '⛽': Fuel,
-  '👑': Crown,
-  '📝': FileText,
-  '🌱': Sprout,
-  '🎓': GraduationCap,
-  '🧪': FlaskConical,
-  '💻': Laptop,
-  '✍️': PenTool,
-  '🏆': Trophy,
-  '🔍': Search,
-  '📊': BarChart3,
-  '👥': Users,
-  '🔗': Link,
-  '⏰': Clock,
-  '🔐': Lock,
-  '💰': Coins,
-  '🏦': Building2,
-  '🎯': Target,
-  '📰': Newspaper,
-  '🎥': Video,
-  '🎙️': Mic,
-  '📖': BookOpen,
-  '🌍': Globe2,
-  '🤝': Handshake,
-  '👤': User,
-  '🛡️': Shield,
-  '🎁': Gift,
-  '📢': Megaphone,
-  '💵': Banknote,
-  '💳': CreditCard,
-  '🔔': Bell,
-  '→': ArrowRight,
-  '←': ArrowLeft,
-  '✓': Check,
-};
+// const iconMap: Record<string, LucideIcon> = {
+//   '💣': Bomb,
+//   '🚀': Rocket,
+//   '💸': Coins,
+//   '🤖': Bot,
+//   '🎰': Activity,
+//   '📈': TrendingUp,
+//   '🌉': Network,
+//   '🔓': Unlock,
+//   '🗳️': Vote,
+//   '⚡': Zap,
+//   '🌐': Globe,
+//   '📉': TrendingDown,
+//   '💱': DollarSign,
+//   '⛽': Fuel,
+//   '👑': Crown,
+//   '📝': FileText,
+//   '🌱': Sprout,
+//   '🎓': GraduationCap,
+//   '🧪': FlaskConical,
+//   '💻': Laptop,
+//   '✍️': PenTool,
+//   '🏆': Trophy,
+//   '🔍': Search,
+//   '📊': BarChart3,
+//   '👥': Users,
+//   '🔗': Link,
+//   '⏰': Clock,
+//   '🔐': Lock,
+//   '💰': Coins,
+//   '🏦': Building2,
+//   '🎯': Target,
+//   '📰': Newspaper,
+//   '🎥': Video,
+//   '🎙️': Mic,
+//   '📖': BookOpen,
+//   '🌍': Globe2,
+//   '🤝': Handshake,
+//   '👤': User,
+//   '🛡️': Shield,
+//   '🎁': Gift,
+//   '📢': Megaphone,
+//   '💵': Banknote,
+//   '💳': CreditCard,
+//   '🔔': Bell,
+//   '→': ArrowRight,
+//   '←': ArrowLeft,
+//   '✓': Check,
+// };
 
 // Get icon component from string/emoji
-function getIconComponent(iconString: string): LucideIcon {
-  // Handle bridge emoji specially
-  if (iconString === '🌉') {
-    return Network;
-  }
-  return iconMap[iconString] || Rocket; // Default to Rocket if not found
-}
+// function getIconComponent(iconString: string): LucideIcon {
+//   // Handle bridge emoji specially
+//   if (iconString === '🌉') {
+//     return Network;
+//   }
+//   return iconMap[iconString] || Rocket; // Default to Rocket if not found
+// }
 
 // Light card background colors - Neubrutalist vibrant palette (no green or yellow)
-const cardColors = [
-  '#E8D5FF', // Light Purple
-  '#B3D9FF', // Light Sky Blue
-  '#FFC0D9', // Light Pink
-  '#FFD4B3', // Light Orange
-  '#FFE0E6', // Very Light Pink
-  '#FFC5CA', // Light Coral Pink
-  '#A8D5F5', // Light Blue
-  '#FFB3B3', // Light Red
-  '#FFD699', // Light Orange
-];
-
+// const cardColors = [
+//   '#E8D5FF', // Light Purple
+//   '#B3D9FF', // Light Sky Blue
+//   '#FFC0D9', // Light Pink
+//   '#FFD4B3', // Light Orange
+//   '#FFE0E6', // Very Light Pink
+//   '#FFC5CA', // Light Coral Pink
+//   '#A8D5F5', // Light Blue
+//   '#FFB3B3', // Light Red
+//   '#FFD699', // Light Orange
+// ];
 
 // Neon brutal turquoise palette
 const turquoiseColors = [
@@ -453,7 +412,7 @@ function PersonalitySelectionScreen({
     let hash = 0;
     for (let i = 0; i < type.length; i++) {
       hash = ((hash << 5) - hash) + type.charCodeAt(i);
-      hash = hash & hash; // Convert to 32bit integer
+      hash &= hash; // Convert to 32bit integer
     }
     const index = Math.abs(hash) % lightGradients.length;
     return lightGradients[index];
@@ -462,12 +421,12 @@ function PersonalitySelectionScreen({
   // Get icon for each personality type
   const getIconForType = (type: PersonalityType): LucideIcon => {
     const iconMap: Record<PersonalityType, LucideIcon> = {
-      'Developer': Code,
+      Developer: Code,
       'DeFi User': Wallet,
       'Content Writer': PenTool,
-      'Marketer': Megaphone,
-      'Founder': Crown,
-      'Farmer': Sprout,
+      Marketer: Megaphone,
+      Founder: Crown,
+      Farmer: Sprout,
       'Other User': User,
     };
     return iconMap[type] || User;
@@ -1009,7 +968,7 @@ function GridViewScreen({
     
     const baseColor = isTurquoiseMode 
       ? turquoiseColors[index % turquoiseColors.length]
-      : '#d9f8e0'
+      : '#d9f8e0';
     // Always return the base color, don't change background for completed/todo states
     return {
       backgroundColor: baseColor,
@@ -1163,7 +1122,7 @@ function GridViewScreen({
             <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-3">
               {grid.map((tile, index) => {
                 const style = getTileStyle(tile.state, index, tile.item);
-                const IconComponent = getIconComponent(tile.item.icon);
+                // const IconComponent = getIconComponent(tile.item.icon); // Not currently used
                 return (
                   <motion.div
                     key={tile.id}

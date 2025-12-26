@@ -21,7 +21,6 @@ function daysSince(fromDate: number, toDate: number = Date.now() / 1000): number
 
 export const STRK_LAUNCH_DATE = new Date('2024-11-26T00:00:00Z');
 
-
 // Helper: Calculate STRK era based on first stake date
 // STRK launch: Nov 26, 2024
 // OG: First month (Nov 26 - Dec 26, 2024)
@@ -167,7 +166,7 @@ export function mapApiDataToUserData(
     isDiamondHand: heldXstrkDuringLowPrice,
     maxXSTRKHeld: maxStrkStaked,
     hasDeFiPositions: defiProtocols.length > 0,
-    defiProtocols: defiProtocols,
+    defiProtocols,
     defiTotalValue: 0, // HARDCODED - not available from API
     badges: [],
     // New fields for ACT 1 cards
@@ -180,8 +179,8 @@ export function mapApiDataToUserData(
     btcEra: calculateBtcEra(wrappedData.firstBtcStakedDate),
     firstStakeDaysSinceBtcLaunch: wrappedData.firstBtcStakedDate ? daysSince(BTC_LAUNCH_DATE.getTime() / 1000, new Date(wrappedData.firstBtcStakedDate).getTime() / 1000) : 0,
     // Liquidity fields
-    avgLiquidityInTrovesLpUsdTotal: avgLiquidityInTrovesLpUsdTotal,
-    avgLiquidityInEkuboLpUsdTotal: avgLiquidityInEkuboLpUsdTotal,
+    avgLiquidityInTrovesLpUsdTotal,
+    avgLiquidityInEkuboLpUsdTotal,
     daysNonZeroLiquidityInTrovesLp: wrappedData.daysNonZeroLiquidityInTrovesLp || 0,
     daysNonZeroLiquidityInEkuboLp: wrappedData.daysNonZeroLiquidityInEkuboLp || 0,
     // Leverage fields
